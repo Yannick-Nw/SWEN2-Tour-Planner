@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/csharp,macos,windows,linux,rider,visualstudio
-# Edit at https://www.toptal.com/developers/gitignore?templates=csharp,macos,windows,linux,rider,visualstudio
+# Created by https://www.toptal.com/developers/gitignore/api/linux,macos,rider,csharp,windows,visualstudio,dotnetcore
+# Edit at https://www.toptal.com/developers/gitignore?templates=linux,macos,rider,csharp,windows,visualstudio,dotnetcore
 
 ### Csharp ###
 ## Ignore Visual Studio temporary files, build results, and
@@ -399,6 +399,15 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+### DotnetCore ###
+# .NET Core build folders
+bin/
+obj/
+
+# Common node modules locations
+/node_modules
+/wwwroot/node_modules
+
 ### Linux ###
 
 # temporary files which can be created if a process still has a handle open of a deleted file
@@ -727,4 +736,4 @@ $RECYCLE.BIN/
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
-# End of https://www.toptal.com/developers/gitignore/api/csharp,macos,windows,linux,rider,visualstudio
+# End of https://www.toptal.com/developers/gitignore/api/linux,macos,rider,csharp,windows,visualstudio,dotnetcore
