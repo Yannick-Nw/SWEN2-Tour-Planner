@@ -15,14 +15,18 @@
             </StackPanel>
 
 			<ListBox x:Name="lstTours" Height="135" Background="White" ItemsSource="{Binding Tours}">
-				<!-- Define how each tour item should be displayed -->
 				<ListBox.ItemTemplate>
 					<DataTemplate>
-						<!-- Display tour details here -->
-						<StackPanel Orientation="Horizontal" >
-							<TextBlock Text="{Binding Name}" FontWeight="Bold" Margin="0,0,10,0"/>
-							<TextBlock Text="{Binding Description}"/>
-							<!-- Add other properties of the tour as needed -->
+						<StackPanel Orientation="Horizontal">
+							<!-- Display tour name -->
+							<Expander Header="{Binding Name}" Width="150">
+								<!-- Display tour description inside the expander -->
+								<StackPanel>
+									<TextBlock Text="{Binding Description}"/>
+									<!-- Add other properties of the tour as needed -->
+								</StackPanel>
+							</Expander>
+							<!-- Delete button -->
 							<Button Content="X" Click="DeleteTour_Click" Margin="5"/>
 						</StackPanel>
 					</DataTemplate>

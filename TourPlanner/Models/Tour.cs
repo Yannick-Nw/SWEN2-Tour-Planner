@@ -16,7 +16,7 @@ namespace TourPlanner.Models
         public string TransportType { get; set; }
         public double Distance { get; set; }
         public TimeSpan EstimatedTime { get; set; }
-        public string RouteInformationImagePath { get; set; } // Path to the image file
+        public string RouteInformationImagePath { get; set; } 
 
     }
 }
