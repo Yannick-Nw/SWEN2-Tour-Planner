@@ -27,11 +27,6 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-
-
-
-            <!-- Ansicht der Tour-Liste -->
-
         </StackPanel>
     </Grid>
 </Window>

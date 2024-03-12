@@ -3,21 +3,11 @@ using TourPlanner.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-
 namespace TourPlanner.ViewModels
 {
     public class TourViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<Tour> tours;
-        public ObservableCollection<Tour> Tours
-        {
-            get { return tours; }
-            set
-            {
-                tours = value;
-                OnPropertyChanged();
-            }
-        }
+        public ObservableCollection<Tour> Tours { get; set; }
 
         // Constructor
         public TourViewModel()
