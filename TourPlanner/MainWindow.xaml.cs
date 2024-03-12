@@ -33,6 +33,15 @@ namespace TourPlanner
             txtTourName.Text = "Tour Name";
             txtDescription.Text = "Description";
         }
+
+        private void DeleteTour_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is Tour tour)
+            {
+                viewModel.Tours.Remove(tour); // Remove the selected tour from the collection
+            }
+        }
+
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox textBox)

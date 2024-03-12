@@ -6,27 +6,29 @@
 
     <Grid>
         <StackPanel>
-            <StackPanel Margin="10">
+            <StackPanel Margin="10" Orientation="Horizontal">
 
-                <TextBox x:Name="txtTourName" Width="200" Height="25" Margin="0 0 0 5" Text="Enter Tour Name" GotFocus="TextBox_GotFocus"/>
-                <TextBox x:Name="txtDescription" Width="200" Height="25" Margin="0 0 0 5" Text="Enter Description" GotFocus="TextBox_GotFocus"/>
+                <TextBox x:Name="txtTourName" Width="150" Height="25" Margin="0 0 10 5" Text="Enter Tour Name" GotFocus="TextBox_GotFocus"/>
+                <TextBox x:Name="txtDescription" Width="150" Height="25" Margin="0 0 10 5" Text="Enter Description" GotFocus="TextBox_GotFocus"/>
                 <!-- Add other input fields for tour details as needed -->
-                <Button Content="Add Tour" Click="AddTour_Click" Width="100" Height="30"/>
+                <Button Content="Add Tour" Click="AddTour_Click" Width="100" Height="25"/>
             </StackPanel>
 
-            <ListBox x:Name="lstTours" Height="136" Background="White" ItemsSource="{Binding Tours}">
-                <!-- Define how each tour item should be displayed -->
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <!-- Display tour details here -->
-                        <StackPanel>
-                            <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
-                            <TextBlock Text="{Binding Description}"/>
-                            <!-- Add other properties of the tour as needed -->
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
+			<ListBox x:Name="lstTours" Height="135" Background="White" ItemsSource="{Binding Tours}">
+				<!-- Define how each tour item should be displayed -->
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<!-- Display tour details here -->
+						<StackPanel Orientation="Horizontal" >
+							<TextBlock Text="{Binding Name}" FontWeight="Bold" Margin="0,0,10,0"/>
+							<TextBlock Text="{Binding Description}"/>
+							<!-- Add other properties of the tour as needed -->
+							<Button Content="X" Click="DeleteTour_Click" Margin="5"/>
+						</StackPanel>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+
+		</StackPanel>
     </Grid>
 </Window>
