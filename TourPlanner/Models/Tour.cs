@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace TourPlanner.Models
 {
-
-    public class Tour
+    public class Tour: ICloneable
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -16,7 +15,20 @@ namespace TourPlanner.Models
         public string TransportType { get; set; }
         public double Distance { get; set; }
         public TimeSpan EstimatedTime { get; set; }
-        public string RouteInformationImagePath { get; set; } 
+        public string TourImage { get; set; }
 
+        public object Clone()
+        {
+            return new Tour
+            {
+                Name = this.Name,
+                Description = this.Description,
+                From = this.From,
+                To = this.To,
+                TransportType = this.TransportType,
+                Distance = this.Distance,
+                EstimatedTime = this.EstimatedTime
+            };
+        }
     }
 }
