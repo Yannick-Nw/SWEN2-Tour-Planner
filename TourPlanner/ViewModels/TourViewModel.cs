@@ -10,11 +10,44 @@ namespace TourPlanner.ViewModels
     public class TourViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<Tour> Tours { get; set; }
-        public Tour SelectedTour { get; set; }
+
+        private Tour _selectedTour;
+        public Tour SelectedTour
+        {
+            get { return _selectedTour; }
+            set
+            {
+                _selectedTour = value;
+                OnPropertyChanged(nameof(SelectedTour));
+
+                // Update TourLogs whenever SelectedTour changes
+                TourLogs = new ObservableCollection<TourLog>(_selectedTour?.Logs);
+            }
+        }
+
 
         public ICommand AddCommand { get; }
         public ICommand UpdateCommand { get; }
         public ICommand DeleteCommand { get; }
+
+
+        private ObservableCollection<TourLog> _tourLogs;
+
+        public ObservableCollection<TourLog> TourLogs
+        {
+            get { return _tourLogs; }
+            set
+            {
+                _tourLogs = value;
+                OnPropertyChanged(nameof(TourLogs));
+            }
+        }
+
+        public TourLog SelectedTourLog { get; set; }
+
+        public ICommand AddLogCommand { get; }
+        public ICommand UpdateLogCommand { get; }
+        public ICommand DeleteLogCommand { get; }
 
         public class RelayCommand : ICommand
         {
@@ -81,6 +114,14 @@ namespace TourPlanner.ViewModels
                 Distance = 120.8, 
                 EstimatedTime = TimeSpan.FromHours(3)
             });
+
+            // Initialize TourLog commands
+            AddLogCommand = new RelayCommand(obj => AddTourLog(), obj => SelectedTour != null);
+            UpdateLogCommand = new RelayCommand(obj => UpdateTourLog(), obj => SelectedTourLog != null);
+            DeleteLogCommand = new RelayCommand(obj => DeleteTourLog(), obj => SelectedTourLog != null);
+
+            // Initialize TourLog collection
+            TourLogs = new ObservableCollection<TourLog>();
         }
 
 
@@ -120,5 +161,45 @@ namespace TourPlanner.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public void AddTourLog()
+        {
+            var addLogWindow = new AddTourLogWindow();
+            if (addLogWindow.ShowDialog() == true)
+            {
+                // Add the new log to the selected tour's logs
+                SelectedTour.Logs.Add(addLogWindow.NewLog);
+
+                // Update the TourLogs collection
+                TourLogs = new ObservableCollection<TourLog>(SelectedTour.Logs);
+            }
+        }
+
+        public void UpdateTourLog()
+        {
+            if (SelectedTourLog != null)
+            {
+                var updateLogWindow = new UpdateTourLogWindow(SelectedTourLog.Clone() as TourLog); // Pass a clone of the selected log
+                if (updateLogWindow.ShowDialog() == true)
+                {
+                    // Update the log in the collection when the user confirms the changes
+                    int index = SelectedTour.Logs.IndexOf(SelectedTourLog);
+                    SelectedTour.Logs[index] = updateLogWindow.UpdatedLog;
+
+                    // Update the TourLogs collection
+                    TourLogs = new ObservableCollection<TourLog>(SelectedTour.Logs);
+                }
+            }
+        }
+
+        public void DeleteTourLog()
+        {
+            SelectedTour.Logs.Remove(SelectedTourLog);
+
+            // Update the TourLogs collection
+            TourLogs = new ObservableCollection<TourLog>(SelectedTour.Logs);
+        }
+
+
     }
 }
