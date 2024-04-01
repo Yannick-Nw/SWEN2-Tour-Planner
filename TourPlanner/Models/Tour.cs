@@ -16,6 +16,7 @@ namespace TourPlanner.Models
         public double Distance { get; set; }
         public TimeSpan EstimatedTime { get; set; }
         public string TourImage { get; set; }
+        public List<TourLog> Logs { get; set; } // New property
 
         public object Clone()
         {
@@ -27,7 +28,8 @@ namespace TourPlanner.Models
                 To = this.To,
                 TransportType = this.TransportType,
                 Distance = this.Distance,
-                EstimatedTime = this.EstimatedTime
+                EstimatedTime = this.EstimatedTime,
+                Logs = this.Logs.Select(log => (TourLog)log.Clone()).ToList() // Clone each log
             };
         }
     }
