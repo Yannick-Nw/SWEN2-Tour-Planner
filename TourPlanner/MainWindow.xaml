@@ -85,7 +85,7 @@
                 <Button Content="Delete" Command="{Binding DeleteLogCommand}"/>
             </StackPanel>
 
-            <ListView x:Name="tourLogListView" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Width="Auto" Height="Auto" HorizontalAlignment="Stretch"  av:ItemsSource="{av:SampleData ItemCount=5}" Margin="20,0,20,0" SelectionChanged="ListView_SelectionChanged">
+            <ListView x:Name="tourLogListView" Grid.Row="2" Grid.Column="0" ItemsSource="{Binding TourLogs}" SelectedItem="{Binding SelectedTourLog}" Width="Auto" Height="Auto" HorizontalAlignment="Stretch"  Margin="20,0,20,0" SelectionChanged="ListView_SelectionChanged">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=Date}" Header="Date"/>
