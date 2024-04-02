@@ -177,7 +177,7 @@
             </Button>
         </StackPanel>
 
-        <ListView x:Name="tourLogListView" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Width="Auto" Height="Auto"  av:ItemsSource="{av:SampleData ItemCount=5}" Margin="216,187,20,0" SelectionChanged="ListView_SelectionChanged">
+        <ListView x:Name="tourLogListView" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Width="Auto" Height="Auto"  ItemsSource="{Binding TourLogs}" Margin="216,187,20,0" SelectionChanged="ListView_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Date}" Header="Date"/>

@@ -45,6 +45,8 @@ namespace TourPlanner.ViewModels
 
         public TourLog SelectedTourLog { get; set; }
 
+        public TourLog NewLog { get; set; }
+
         public ICommand AddLogCommand { get; }
         public ICommand UpdateLogCommand { get; }
         public ICommand DeleteLogCommand { get; }
@@ -115,9 +117,12 @@ namespace TourPlanner.ViewModels
                 EstimatedTime = TimeSpan.FromHours(3)
             });
 
+            // Initialize the NewLog instance
+            NewLog = new TourLog();
+
             // Initialize TourLog commands
             AddLogCommand = new RelayCommand(obj => AddTourLog(), obj => SelectedTour != null);
-            UpdateLogCommand = new RelayCommand(obj => UpdateTourLog(), obj => SelectedTourLog != null);
+            //UpdateLogCommand = new RelayCommand(obj => UpdateTourLog(), obj => SelectedTourLog != null);
             DeleteLogCommand = new RelayCommand(obj => DeleteTourLog(), obj => SelectedTourLog != null);
 
             // Initialize TourLog collection
@@ -164,17 +169,20 @@ namespace TourPlanner.ViewModels
 
         public void AddTourLog()
         {
-            var addLogWindow = new AddTourLogWindow();
+            var newLog = new TourLog();
+            var addLogWindow = new AddTourLogWindow
+            {
+                DataContext = newLog
+            };
+
             if (addLogWindow.ShowDialog() == true)
             {
-                // Add the new log to the selected tour's logs
-                SelectedTour.Logs.Add(addLogWindow.NewLog);
-
-                // Update the TourLogs collection
+                SelectedTour.Logs.Add(newLog);
                 TourLogs = new ObservableCollection<TourLog>(SelectedTour.Logs);
             }
         }
 
+        /*
         public void UpdateTourLog()
         {
             if (SelectedTourLog != null)
@@ -191,7 +199,7 @@ namespace TourPlanner.ViewModels
                 }
             }
         }
-
+        */
         public void DeleteTourLog()
         {
             SelectedTour.Logs.Remove(SelectedTourLog);
