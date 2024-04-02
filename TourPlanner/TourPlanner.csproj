@@ -9,7 +9,6 @@
     <RootNamespace>TourPlanner</RootNamespace>
     <AssemblyName>TourPlanner</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-	
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -62,6 +61,9 @@
     <Compile Include="Models\TourLog.cs" />
     <Compile Include="Tests\TourServiceTests.cs" />
     <Compile Include="ViewModels\TourViewModel.cs" />
+    <Compile Include="Views\AddTourLogWindow.xaml.cs">
+      <DependentUpon>AddTourLogWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UpdateTourWindow.xaml.cs">
       <DependentUpon>UpdateTourWindow.xaml</DependentUpon>
     </Compile>
@@ -77,6 +79,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\AddTourLogWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\UpdateTourWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
