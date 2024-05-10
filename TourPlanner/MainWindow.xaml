@@ -20,9 +20,8 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-
             <!-- Search text box -->
-            <TextBox Grid.Column="0" Text="Search Tours..." Padding="0"/>
+            <TextBox Grid.Column="0" Text="Search Tours" Padding="5"/>
 
             <!-- Clickable search icon -->
             <Button Grid.Column="1" Margin="5,0" Background="Transparent" BorderThickness="0">
@@ -70,24 +69,22 @@
             </Button>
 
 
-            <Button Content="Update" Command="{Binding UpdateCommand}" Margin="5" Foreground="#FF140D0D" Click="Button_Click">
+            <Button Content="U" Command="{Binding UpdateCommand}" Margin="5" Foreground="#FF140D0D" Click="Button_Click">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Background" Value="#007ACC"/>
                         <Setter Property="Foreground" Value="White"/>
                         <Setter Property="Padding" Value="10,5"/>
                         <Setter Property="BorderThickness" Value="1"/>
-
                     </Style>
                 </Button.Style>
             </Button>
-
         </StackPanel>
 
         <!-- Border to contain the ListBox on the left side -->
         <Border Grid.Row="2" BorderBrush="Black" BorderThickness="1" Width="200" Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,0,0,0">
             <!-- Content for tour list -->
-            <!-- ListBox for tour list -->
+           
             <ListBox x:Name="tourListBox" ItemsSource="{Binding Tours}" SelectedItem="{Binding SelectedTour}" SelectionChanged="ListBox_SelectionChanged" Height="Auto" VerticalAlignment="Stretch" Background="#F5F5F5">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -128,66 +125,62 @@
 
         <!-- Field for displaying the map -->
         <Border Grid.Row="1" BorderBrush="Blue" BorderThickness="1" Height="117" Margin="216,68,20,0" VerticalAlignment="Top" Grid.RowSpan="2"/>
+         
+        
+       <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right"  Margin="0,18,20,0">
 
-        <!-- StackPanel containing buttons for tour logs -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right"  Margin="0,18,20,0">
-
-            <Button Content="+" Command="{Binding AddLogCommand}" Margin="5" Width="30" Height="30">
+       <Button Content="+" Command="{Binding AddTourLogCommand}" Margin="5" Width="30" Height="30">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Background" Value="#007ACC"/>
                         <Setter Property="Foreground" Value="White"/>
                         <Setter Property="Padding" Value="10, 1"/>
-                        <Setter Property="BorderThickness" Value="0"/>
-
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#3399FF"/>
-                            </Trigger>
-                        </Style.Triggers>
+                        <Setter Property="BorderThickness" Value="1"/>
+                      
                     </Style>
                 </Button.Style>
-            </Button>
-            <Button Content="-" Command="{Binding DeleteLogCommand}" Margin="5" Height="30">
+        </Button>
+            <Button Content="-" Command="{Binding DeleteTourLogCommand}" Margin="5" Width="30" Height="30" Foreground="Black">
                 <Button.Style>
                     <Style TargetType="Button">
-                        <Setter Property="Background" Value="#FF3333"/>
-                        <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="Padding" Value="10,5"/>
-                        <Setter Property="BorderThickness" Value="1"/>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#CC0000"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
-
-            <Button Content="Update" Command="{Binding UpdateLogCommand}" Foreground="#FF140D0D" Click="Button_Click" Height="30">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
                         <Setter Property="Background" Value="#007ACC"/>
                         <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="Padding" Value="10,5"/>
+                        <Setter Property="Padding" Value="10, 1"/>
                         <Setter Property="BorderThickness" Value="1"/>
-
+                        
                     </Style>
                 </Button.Style>
             </Button>
+            <Button Content="Update" Command="{Binding UpdateTourLogCommand}" Margin="5" Width="30" Height="30"  Foreground="Black">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#007ACC"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Padding" Value="10, 1"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                      
+                    </Style>
+                </Button.Style>
+            </Button>
+
+
         </StackPanel>
 
-        <ListView x:Name="tourLogListView" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Width="Auto" Height="Auto"  ItemsSource="{Binding TourLogs}" Margin="216,187,20,0" SelectionChanged="ListView_SelectionChanged">
+ 
+        
+        <ListView x:Name="tourLogListView" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Width="Auto" Height="Auto"  ItemsSource="{Binding SelectedTour.TourLogs}" SelectedItem="{Binding SelectedTourLog}" Margin="216,187,20,0" SelectionChanged="ListView_SelectionChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Date}" Header="Date"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=DateTime}" Header="Date"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Comment}" Header="Comment"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Difficulty}" Header="Difficulty"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=TotalDistance}" Header="Total Distance"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=totalTime}" Header="Total Time"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=TotalTime}" Header="Total Time"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Rating}" Header="Rating"/>
                 </GridView>
             </ListView.View>
         </ListView>
+   
     </Grid>
+ 
 </Window>

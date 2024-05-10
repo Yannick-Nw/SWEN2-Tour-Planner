@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using TourPlanner.Models;
 using System.Windows.Media;
+using TourPlanner.ViewModels;
 
 
 namespace TourPlanner
@@ -11,6 +12,7 @@ namespace TourPlanner
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new TourViewModel();
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -4,12 +4,15 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TourPlanner.ViewModels
 {
     public class TourViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<Tour> Tours { get; set; }
+
 
         private Tour _selectedTour;
         public Tour SelectedTour
@@ -19,70 +22,33 @@ namespace TourPlanner.ViewModels
             {
                 _selectedTour = value;
                 OnPropertyChanged(nameof(SelectedTour));
-
-                // Update TourLogs whenever SelectedTour changes
-                TourLogs = new ObservableCollection<TourLog>(_selectedTour?.Logs);
+                OnPropertyChanged(nameof(SelectedTourLog)); 
             }
         }
 
-
+        
         public ICommand AddCommand { get; }
         public ICommand UpdateCommand { get; }
         public ICommand DeleteCommand { get; }
-
-
-        private ObservableCollection<TourLog> _tourLogs;
-
-        public ObservableCollection<TourLog> TourLogs
-        {
-            get { return _tourLogs; }
-            set
-            {
-                _tourLogs = value;
-                OnPropertyChanged(nameof(TourLogs));
-            }
-        }
+        public ICommand AddTourLogCommand { get; }
+        public ICommand UpdateTourLogCommand { get; }
+        public ICommand DeleteTourLogCommand { get; }
 
         public TourLog SelectedTourLog { get; set; }
-
-        public TourLog NewLog { get; set; }
-
-        public ICommand AddLogCommand { get; }
-        public ICommand UpdateLogCommand { get; }
-        public ICommand DeleteLogCommand { get; }
-
-        public class RelayCommand : ICommand
-        {
-            private readonly Action<object> _execute;
-            private readonly Func<object, bool> _canExecute;
-
-            public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
-            {
-                _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-                _canExecute = canExecute;
-            }
-
-            public bool CanExecute(object parameter) => _canExecute == null || _canExecute(parameter);
-            public void Execute(object parameter) => _execute(parameter);
-
-            // Event required by ICommand interface
-            public event EventHandler CanExecuteChanged
-            {
-                add { CommandManager.RequerySuggested += value; }
-                remove { CommandManager.RequerySuggested -= value; }
-            }
-        }
-
         public TourViewModel()
         {
+            // Initialize collection
+            Tours = new ObservableCollection<Tour>();
+         
             // Initialize commands
             AddCommand = new RelayCommand(obj => AddTour());
             UpdateCommand = new RelayCommand(obj => UpdateTour(), obj => SelectedTour != null);
             DeleteCommand = new RelayCommand(obj => DeleteTour(), obj => SelectedTour != null);
-
-            // Initialize collection
-            Tours = new ObservableCollection<Tour>();
-
+            AddTourLogCommand = new RelayCommand(obj => AddTourLog(), obj => SelectedTour != null);
+            UpdateTourLogCommand = new RelayCommand(obj => UpdateTourLog(), obj => SelectedTourLog != null);
+            DeleteTourLogCommand = new RelayCommand(obj => DeleteTourLog(), obj => SelectedTourLog != null);
+           
+      
             // Hardcoded tours for testing
             Tours.Add(new Tour
             {
@@ -91,8 +57,8 @@ namespace TourPlanner.ViewModels
                 From = "Starting point for Tour 1",
                 To = "Destination for Tour 1",
                 TransportType = "Transportation type for Tour 1",
-                Distance = 100.5, 
-                EstimatedTime = TimeSpan.FromHours(2) 
+                Distance = 100.5,
+                EstimatedTime = TimeSpan.FromHours(2)
             });
 
             Tours.Add(new Tour
@@ -103,7 +69,7 @@ namespace TourPlanner.ViewModels
                 To = "Destination for Tour 2",
                 TransportType = "Transportation type for Tour 2",
                 Distance = 75.2,
-                EstimatedTime = TimeSpan.FromHours(1.5) 
+                EstimatedTime = TimeSpan.FromHours(1.5)
             });
 
             Tours.Add(new Tour
@@ -113,23 +79,45 @@ namespace TourPlanner.ViewModels
                 From = "Starting point for Tour 3",
                 To = "Destination for Tour 3",
                 TransportType = "Transportation type for Tour 3",
-                Distance = 120.8, 
+                Distance = 120.8,
                 EstimatedTime = TimeSpan.FromHours(3)
             });
-
-            // Initialize the NewLog instance
-            NewLog = new TourLog();
-
-            // Initialize TourLog commands
-            AddLogCommand = new RelayCommand(obj => AddTourLog(), obj => SelectedTour != null);
-            //UpdateLogCommand = new RelayCommand(obj => UpdateTourLog(), obj => SelectedTourLog != null);
-            DeleteLogCommand = new RelayCommand(obj => DeleteTourLog(), obj => SelectedTourLog != null);
-
-            // Initialize TourLog collection
-            TourLogs = new ObservableCollection<TourLog>();
         }
 
-
+         public void AddTourLog()
+         {
+             var addTourLogWindow = new AddTourLogWindow();
+             if (addTourLogWindow.ShowDialog() == true)
+             {
+                 // Add the new tour log to the selected tour
+                 SelectedTour.TourLogs.Add(addTourLogWindow.NewTourLog);
+             }
+         }
+         
+        public void UpdateTourLog()
+        {
+            if (SelectedTourLog != null)
+            {
+                var updateTourLogWindow = new UpdateTourLogWindow(SelectedTourLog.Clone() as TourLog); // Pass a clone of the selected tour log
+                if (updateTourLogWindow.ShowDialog() == true)
+                {
+                    // Update the tour log in the collection when the user confirms the changes
+                    int index = SelectedTour.TourLogs.IndexOf(SelectedTourLog);
+                    SelectedTour.TourLogs[index] = updateTourLogWindow.UpdatedTourLog;
+                }
+            }
+        }
+        
+        public void DeleteTourLog()
+        {
+            if (SelectedTourLog != null && SelectedTour != null && SelectedTour.TourLogs.Contains(SelectedTourLog))
+            {
+                // Remove the selected tour log from the collection of the selected tour
+                SelectedTour.TourLogs.Remove(SelectedTourLog);
+                SelectedTourLog = null; // Clear the selected tour log after deletion
+            }
+        }
+   
         public void AddTour()
         {
             var addTourWindow = new AddTourWindow();
@@ -155,7 +143,7 @@ namespace TourPlanner.ViewModels
             }
         }
 
-
+ 
         public void DeleteTour()
         {
             Tours.Remove(SelectedTour);
@@ -167,46 +155,8 @@ namespace TourPlanner.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void AddTourLog()
-        {
-            var newLog = new TourLog();
-            var addLogWindow = new AddTourLogWindow
-            {
-                DataContext = newLog
-            };
 
-            if (addLogWindow.ShowDialog() == true)
-            {
-                SelectedTour.Logs.Add(newLog);
-                TourLogs = new ObservableCollection<TourLog>(SelectedTour.Logs);
-            }
-        }
-
-        /*
-        public void UpdateTourLog()
-        {
-            if (SelectedTourLog != null)
-            {
-                var updateLogWindow = new UpdateTourLogWindow(SelectedTourLog.Clone() as TourLog); // Pass a clone of the selected log
-                if (updateLogWindow.ShowDialog() == true)
-                {
-                    // Update the log in the collection when the user confirms the changes
-                    int index = SelectedTour.Logs.IndexOf(SelectedTourLog);
-                    SelectedTour.Logs[index] = updateLogWindow.UpdatedLog;
-
-                    // Update the TourLogs collection
-                    TourLogs = new ObservableCollection<TourLog>(SelectedTour.Logs);
-                }
-            }
-        }
-        */
-        public void DeleteTourLog()
-        {
-            SelectedTour.Logs.Remove(SelectedTourLog);
-
-            // Update the TourLogs collection
-            TourLogs = new ObservableCollection<TourLog>(SelectedTour.Logs);
-        }
+    
 
 
     }

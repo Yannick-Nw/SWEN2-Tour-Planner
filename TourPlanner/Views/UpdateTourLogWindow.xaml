@@ -1,12 +1,12 @@
-﻿<Window x:Class="TourPlanner.Views.AddTourLogWindow"
+﻿<Window x:Class="TourPlanner.Views.UpdateTourLogWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TourPlanner.Views"
         xmlns:models="clr-namespace:TourPlanner.Models"
-    mc:Ignorable="d"
-        Title="Add Tour Log" Height="500" Width="400">
+        mc:Ignorable="d"
+        Title="Update Tour Log" Height="500" Width="400">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -54,6 +54,8 @@
             <TextBox Text="{Binding TotalTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="5"/>
         </StackPanel>
 
+
+
         <!-- Rating -->
         <StackPanel Grid.Row="5" Orientation="Horizontal">
             <Label Content="Rating:" Width="100"/>
@@ -66,9 +68,7 @@
             </ComboBox>
         </StackPanel>
 
-
-        <!-- Add Button -->
-        <Button Content="Add" Click="Add_Click" Grid.Row="8" HorizontalAlignment="Center" Margin="5"/>
-
+        <!-- Update Button -->
+        <Button Content="Update" Click="Update_Click" Grid.Row="7" HorizontalAlignment="Center"/>
     </Grid>
 </Window>

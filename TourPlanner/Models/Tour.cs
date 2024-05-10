@@ -16,11 +16,20 @@ namespace TourPlanner.Models
         public double Distance { get; set; }
         public TimeSpan EstimatedTime { get; set; }
         public string TourImage { get; set; }
-        public List<TourLog> Logs { get; set; } // New property
 
+        public List<TourLog> TourLogs { get; set; }
+
+        // Constructor
+        public Tour()
+        {
+            TourLogs = new List<TourLog>();
+        }
+
+        // Clone method
         public object Clone()
         {
-            return new Tour
+            // Clone existing properties
+            var clonedTour = new Tour
             {
                 Name = this.Name,
                 Description = this.Description,
@@ -29,8 +38,24 @@ namespace TourPlanner.Models
                 TransportType = this.TransportType,
                 Distance = this.Distance,
                 EstimatedTime = this.EstimatedTime,
-                Logs = this.Logs.Select(log => (TourLog)log.Clone()).ToList() // Clone each log
+                TourImage = this.TourImage
             };
+
+            // Clone tour logs
+            foreach (var tourLog in this.TourLogs)
+            {
+                clonedTour.TourLogs.Add(new TourLog
+                {
+                    DateTime = tourLog.DateTime,
+                    Comment = tourLog.Comment,
+                    Difficulty = tourLog.Difficulty,
+                    TotalDistance = tourLog.TotalDistance,
+                    TotalTime = tourLog.TotalTime,
+                    Rating = tourLog.Rating
+                });
+            }
+
+            return clonedTour;
         }
     }
 }

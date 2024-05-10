@@ -1,14 +1,28 @@
-﻿using System.Windows;
-using TourPlanner.ViewModels;
+﻿using System;
+using System.Windows;
+using TourPlanner.Models;
 
 namespace TourPlanner.Views
 {
     public partial class AddTourLogWindow : Window
     {
+        public TourLog NewTourLog { get; private set; }
+
         public AddTourLogWindow()
         {
             InitializeComponent();
-            DataContext = new TourViewModel();
+            NewTourLog = new TourLog();
+            DataContext = NewTourLog;
+        }
+
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+        }
+
+        private void ComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

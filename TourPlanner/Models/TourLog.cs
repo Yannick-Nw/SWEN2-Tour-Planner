@@ -6,15 +6,34 @@ using System.Threading.Tasks;
 
 namespace TourPlanner.Models
 {
+
+    public enum Difficulty
+    {
+        Easy,
+        Medium,
+        Hard
+    }
+    public enum Rating
+    {
+      
+       /* OneStar = 1,
+        TwoStars = 2,
+        ThreeStars = 3,
+        FourStars = 4,
+        FiveStars = 5
+       */
+       
+    }
     public class TourLog : ICloneable
     {
         public DateTime DateTime { get; set; }
         public string Comment { get; set; }
-        public string Difficulty { get; set; }
+        public Difficulty Difficulty { get; set; }
         public double TotalDistance { get; set; }
         public TimeSpan TotalTime { get; set; }
         public int Rating { get; set; }
-
+        
+       
         public object Clone()
         {
             return new TourLog

@@ -19,21 +19,6 @@ namespace TourPlanner.Views
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            // Create a new tour with the provided information
-            Tour newTour = new Tour
-            {
-                Name = NewTour.Name,
-                Description = NewTour.Description,
-                From = NewTour.From,
-                To = NewTour.To,
-                TransportType = NewTour.TransportType,
-                Distance = NewTour.Distance,
-               
-                //EstimatedTime = TimeSpan.FromHours(EstimatedHours) + TimeSpan.FromMinutes(EstimatedMinutes),
-                TourImage = NewTour.TourImage
-            };
-
-            // Close the window
             DialogResult = true;
         }
 
