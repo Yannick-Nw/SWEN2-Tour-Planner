@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,9 @@ namespace TourPlanner.Models
     }
     public class TourLog : ICloneable
     {
+        [Key]
+        public int Id { get; private set; }
+        [Required]
         public DateTime DateTime { get; set; }
         public string Comment { get; set; }
         public Difficulty Difficulty { get; set; }
