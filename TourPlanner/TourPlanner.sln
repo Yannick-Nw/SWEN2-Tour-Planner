@@ -1,11 +1,11 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourPlanner", "TourPlanner.csproj", "{886DCA7D-F661-4A6D-B7FA-1AB88B61F510}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourPlanner", "TourPlanner.csproj", "{886DCA7D-F661-4A6D-B7FA-1AB88B61F510}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourPlannerTest", "..\TourPlannerTest\TourPlannerTest.csproj", "{384D07EC-24CA-4537-A55E-5C6D98898F74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TourPlannerTest", "..\TourPlannerTest\TourPlannerTest.csproj", "{384D07EC-24CA-4537-A55E-5C6D98898F74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
