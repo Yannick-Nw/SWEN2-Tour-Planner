@@ -14,17 +14,7 @@ namespace TourPlanner.Models
         Medium,
         Hard
     }
-    public enum Rating
-    {
-      
-       /* OneStar = 1,
-        TwoStars = 2,
-        ThreeStars = 3,
-        FourStars = 4,
-        FiveStars = 5
-       */
-       
-    }
+
     public class TourLog : ICloneable
     {
         [Key]

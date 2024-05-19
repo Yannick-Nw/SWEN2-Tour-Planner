@@ -1,5 +1,7 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -9,6 +11,7 @@ namespace TourPlanner.Models
 {
     public class Tour: ICloneable
     {
+        //private static readonly ILog log = LogManager.GetLogger(typeof(Tour));
         [Key]
         public int Id { get; private set; }
         [Required]
@@ -29,16 +32,19 @@ namespace TourPlanner.Models
         public string TourImage { get; set; }
 
         public List<TourLog> TourLogs { get; set; }
+        public ObservableCollection<TourLog> FilteredTourLogs { get; set; }
 
         // Constructor
         public Tour()
         {
-            TourLogs = new List<TourLog>();
+            TourLogs = [];
+            FilteredTourLogs = new ObservableCollection<TourLog>();
         }
 
         // Clone method
         public object Clone()
         {
+           
             // Clone existing properties
             var clonedTour = new Tour
             {
@@ -65,7 +71,7 @@ namespace TourPlanner.Models
                     Rating = tourLog.Rating
                 });
             }
-
+            //log.Info($"Tour cloned successfully: {clonedTour.Name}");
             return clonedTour;
         }
     }

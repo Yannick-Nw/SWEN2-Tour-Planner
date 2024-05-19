@@ -1,13 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/*using System;
 using System.Windows.Input;
 
 namespace TourPlanner.ViewModels
 {
   
+    public class RelayCommand(Action<object> execute, Func<object, bool> canExecute = null) : ICommand
+    {
+        private readonly Action<object> _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+        private readonly Func<object, bool> _canExecute = canExecute;
+
+        public bool CanExecute(object parameter) => _canExecute == null || _canExecute(parameter);
+        public void Execute(object parameter) => _execute(parameter);
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+    }
+}
+*/
+
+using System;
+using System.Windows.Input;
+
+namespace TourPlanner.ViewModels
+{
     public class RelayCommand : ICommand
     {
         private readonly Action<object> _execute;
@@ -19,14 +37,29 @@ namespace TourPlanner.ViewModels
             _canExecute = canExecute;
         }
 
-        public bool CanExecute(object parameter) => _canExecute == null || _canExecute(parameter);
-        public void Execute(object parameter) => _execute(parameter);
+        public bool CanExecute(object parameter)
+        {
+            // Check if it's a regular command or a search command
+            if (_canExecute == null)
+                return true;
+            else
+                return _canExecute(parameter);
+        }
 
-        // Event required by ICommand interface
+        public void Execute(object parameter)
+        {
+            _execute(parameter);
+        }
+
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        public void OnCanExecuteChanged()
+        {
+            CommandManager.InvalidateRequerySuggested();
         }
     }
 }
