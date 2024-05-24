@@ -1,17 +1,20 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TourPlanner.Models
 {
+    public enum TransportType 
+    {
+        Walking,
+        Bike,
+        Car
+    }
     public class Tour: ICloneable
     {
-        //private static readonly ILog log = LogManager.GetLogger(typeof(Tour));
+       
         [Key]
         public int Id { get; private set; }
         [Required]
@@ -23,28 +26,48 @@ namespace TourPlanner.Models
         [Required]
         public string To { get; set; }
         [Required]
-        public string TransportType { get; set; }
+        public TransportType TransportType { get; set; }
         [Required]
         public double Distance { get; set; }
         [Required]
         public TimeSpan EstimatedTime { get; set; }
         [Required]
         public string TourImage { get; set; }
+        public int Popularity { get; set; }
+        public int ChildFriendliness
+        {
+            get
+            {
+                if (TourLogs == null || TourLogs.Count == 0)
+                    return 0;
 
+                // Calculate average difficulty, total time, and total distance from tour logs
+                double avgDifficulty = TourLogs.Average(log => (int)log.Difficulty);
+                double totalTime = TourLogs.Sum(log => log.TotalTime.TotalHours);
+                double totalDistance = TourLogs.Sum(log => log.TotalDistance);
+
+                // Calculate child-friendliness based on difficulty, time, and distance
+                double childFriendliness = (10 - avgDifficulty) * (1 - (totalTime / 24)) * (1 - (totalDistance / 100));
+
+                // Ensure the child-friendliness value is between 0 and 10
+                return (int) Math.Max(0, Math.Min(10, childFriendliness));
+            }
+        }
+
+     
         public List<TourLog> TourLogs { get; set; }
-        public ObservableCollection<TourLog> FilteredTourLogs { get; set; }
+       // public ObservableCollection<TourLog> FilteredTourLogs { get; set; }
 
         // Constructor
         public Tour()
         {
             TourLogs = [];
-            FilteredTourLogs = new ObservableCollection<TourLog>();
+            //FilteredTourLogs = new ObservableCollection<TourLog>();
         }
 
         // Clone method
         public object Clone()
         {
-           
             // Clone existing properties
             var clonedTour = new Tour
             {
@@ -71,8 +94,9 @@ namespace TourPlanner.Models
                     Rating = tourLog.Rating
                 });
             }
-            //log.Info($"Tour cloned successfully: {clonedTour.Name}");
+           
             return clonedTour;
         }
     }
 }
+

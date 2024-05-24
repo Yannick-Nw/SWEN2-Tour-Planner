@@ -42,6 +42,8 @@ namespace TourPlanner.Report
                             column.Item().Text($"Transport Type: {tour.TransportType}");
                             column.Item().Text($"Distance: {tour.Distance} km");
                             column.Item().Text($"Estimated Time: {tour.EstimatedTime}");
+                            column.Item().Text($"Popularity: {tour.Popularity}");
+                            column.Item().Text($"Child Friendliness: {tour.ChildFriendliness}");
 
                             if (!string.IsNullOrEmpty(tour.TourImage))
                             {

@@ -19,6 +19,10 @@
             <MenuItem Header="Summary Report" Command="{Binding ReportViewModel.GenerateSummaryReportCommand}" />
             <MenuItem Header="Tour Report" Command="{Binding ReportViewModel.GenerateTourReportCommand}" IsEnabled="{Binding ReportViewModel.IsSelectedTour}" />
         </ContextMenu>
+        <ContextMenu x:Key="FileContextMenu">
+            <MenuItem Header="Export Tour" Command="{Binding TourViewModel.ExportCommand}" />
+            <MenuItem Header="Import Tour" Command="{Binding TourViewModel.ImportCommand}"/>
+        </ContextMenu>
     </Window.Resources>
 
     <Grid Margin="10">
@@ -32,9 +36,21 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Row="0" Grid.ColumnSpan="2" Margin="0,10,0,0">
+        <!-- Menu Bar -->
+        <Menu Grid.Row="0" Grid.ColumnSpan="2">
+            <MenuItem Header="PDF Export">
+                <MenuItem Header="Summary Report" Command="{Binding ReportViewModel.GenerateSummaryReportCommand}" />
+                <MenuItem Header="Tour Report" Command="{Binding ReportViewModel.GenerateTourReportCommand}" IsEnabled="{Binding ReportViewModel.IsSelectedTour}" />
+            </MenuItem>
+            <MenuItem Header="File">
+                <MenuItem Header="Export Tour" Command="{Binding TourViewModel.ExportCommand}" />
+                <MenuItem Header="Import Tour" Command="{Binding TourViewModel.ImportCommand}" />
+            </MenuItem>
+        </Menu>
+
+        <Grid Grid.Row="0" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
@@ -44,17 +60,14 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0" Text="{Binding TourViewModel.SearchText, UpdateSourceTrigger=PropertyChanged}" Padding="5"/>
+                <TextBox Grid.Column="0" Text="{Binding TourViewModel.SearchText, UpdateSourceTrigger=PropertyChanged}" Padding="5" Width ="200" HorizontalAlignment="Right"/>
 
                 <Button Grid.Column="1" Margin="5,0" Background="Transparent" BorderThickness="0" Command="{Binding TourViewModel.SearchCommand}">
                     <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE721;" FontSize="13"/>
                 </Button>
             </Grid>
-
-            <Button Grid.Column="1" Content="Export PDF" Width="100" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,10,0" Click="ExportButton_Click"/>
         </Grid>
-
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="45,23,0,5" HorizontalAlignment="Left">
+    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,20,0,5" HorizontalAlignment="Left">
             <Button Content="+" Command="{Binding TourViewModel.AddCommand}" Margin="5" Width="30">
                 <Button.Style>
                     <Style TargetType="Button">
@@ -85,7 +98,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button Content="U" Command="{Binding TourViewModel.UpdateCommand}" Margin="5" Foreground="#FF140D0D" Click="Button_Click">
+            <Button Content="..." Command="{Binding TourViewModel.UpdateCommand}" Margin="5" Foreground="#FF140D0D" Click="Button_Click">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Background" Value="#007ACC"/>
@@ -95,6 +108,7 @@
                     </Style>
                 </Button.Style>
             </Button>
+           
         </StackPanel>
 
         <Border Grid.Row="2" BorderBrush="Black" BorderThickness="1" Width="200" Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,0,0,0">
@@ -136,9 +150,29 @@
             </ListBox>
         </Border>
 
-        <Border Grid.Row="1" BorderBrush="Blue" BorderThickness="1" Height="117" Margin="216,68,20,0" VerticalAlignment="Top" Grid.RowSpan="2" />
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,18,20,0">
+
+        <!-- Tabs and Map Section -->
+        <TabControl Grid.Row="1" Margin="205,40,0,167" Grid.RowSpan="2">
+
+            <TabItem Header="Route">
+                <!-- Map Display -->
+
+            </TabItem>
+            <TabItem Header="General">
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <TextBlock Text="Popularity:" FontWeight="Bold" Margin="0,0,5,0"/>
+                    <TextBlock Text="{Binding TourViewModel.SelectedTour.Popularity}" Margin="0,0,10,0"/>
+                    <TextBlock Text="Child Friendliness:" FontWeight="Bold" Margin="0,0,5,0"/>
+                    <TextBlock Text="{Binding TourViewModel.SelectedTour.ChildFriendliness}" Margin="0,0,10,0"/>
+
+                </StackPanel>
+            </TabItem>
+
+        </TabControl>
+
+
+        <StackPanel Grid.Row="2"  Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="+" Command="{Binding TourLogViewModel.AddTourLogCommand}" Margin="5" Width="30" Height="30">
                 <Button.Style>
                     <Style TargetType="Button">
@@ -159,7 +193,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button Content="Update" Command="{Binding TourLogViewModel.UpdateTourLogCommand}" Margin="5" Width="30" Height="30" Foreground="Black">
+            <Button Content="..." Command="{Binding TourLogViewModel.UpdateTourLogCommand}" Margin="5" Width="30" Height="30" Foreground="Black">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Background" Value="#007ACC" />
@@ -171,7 +205,7 @@
             </Button>
         </StackPanel>
 
-        <ListView x:Name="tourLogListView" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Width="Auto" Height="Auto" ItemsSource="{Binding TourLogViewModel.SelectedTour.TourLogs}" SelectedItem="{Binding TourLogViewModel.SelectedTourLog}" Margin="216,187,20,0" SelectionChanged="ListView_SelectionChanged">
+        <ListView x:Name="tourLogListView" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Width="Auto" Height="Auto" ItemsSource="{Binding TourLogViewModel.SelectedTour.TourLogs}" SelectedItem="{Binding TourLogViewModel.SelectedTourLog}" Margin="205,180,0,0" SelectionChanged="ListView_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=DateTime}" Header="Date" />

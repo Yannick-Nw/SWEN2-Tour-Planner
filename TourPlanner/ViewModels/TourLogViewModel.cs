@@ -20,8 +20,10 @@ namespace TourPlanner.ViewModels
                 _selectedTour = value;
                 OnPropertyChanged(nameof(SelectedTour));
                 OnPropertyChanged(nameof(TourLogs));
+                UpdateTourPopularity(); 
             }
         }
+
 
         public ObservableCollection<TourLog> TourLogs => SelectedTour?.TourLogs != null
             ? new ObservableCollection<TourLog>(SelectedTour.TourLogs)
@@ -48,8 +50,19 @@ namespace TourPlanner.ViewModels
             AddTourLogCommand = new RelayCommand(obj => AddTourLog(), obj => SelectedTour != null);
             UpdateTourLogCommand = new RelayCommand(obj => UpdateTourLog(), obj => SelectedTourLog != null);
             DeleteTourLogCommand = new RelayCommand(obj => DeleteTourLog(), obj => SelectedTourLog != null);
+            UpdateTourPopularity();
         }
 
+
+        private void UpdateTourPopularity()
+        {
+            if (SelectedTour != null)
+            {
+                SelectedTour.Popularity = SelectedTour.TourLogs?.Count ?? 0;
+                // Notify UI of the change
+                OnPropertyChanged(nameof(SelectedTour));
+            }
+        }
         public void AddTourLog()
         {
             var addTourLogWindow = new AddTourLogWindow();

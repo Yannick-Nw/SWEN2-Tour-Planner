@@ -10,8 +10,8 @@ namespace TourPlanner.Views
         public UpdateTourLogWindow(TourLog tourLog)
         {
             InitializeComponent();
-            UpdatedTourLog = tourLog; // Set the UpdatedTourLog property to the provided tour log
-            DataContext = UpdatedTourLog; // Set the data context to the provided tour log
+            UpdatedTourLog = tourLog; 
+            DataContext = UpdatedTourLog; 
         }
 
         private void Update_Click(object sender, RoutedEventArgs e)

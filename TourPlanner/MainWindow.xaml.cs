@@ -33,7 +33,7 @@ namespace TourPlanner
         {
 
         }
-        private void ExportButton_Click(object sender, RoutedEventArgs e)
+        private void ExportPDFButton_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
             if (button != null)
@@ -46,6 +46,21 @@ namespace TourPlanner
                 }
             }
         }
+        private void FileButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            if (button != null)
+            {
+                ContextMenu contextMenu = this.FindResource("FileContextMenu") as ContextMenu;
+                if (contextMenu != null)
+                {
+                    contextMenu.PlacementTarget = button;
+                    contextMenu.IsOpen = true;
+                }
+            }
+        }
+
+
 
 
     }

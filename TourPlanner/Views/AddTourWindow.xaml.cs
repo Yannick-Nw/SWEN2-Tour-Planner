@@ -13,8 +13,8 @@ namespace TourPlanner.Views
         public AddTourWindow()
         {
             InitializeComponent();
-            NewTour = new Tour(); // Initialize a new Tour object
-            DataContext = NewTour; // Set the data context to the new Tour object
+            NewTour = new Tour(); 
+            DataContext = NewTour; 
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
