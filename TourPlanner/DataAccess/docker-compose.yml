@@ -1,0 +1,16 @@
+name: tourplannerdb
+services:
+    postgres:
+        container_name: tourplannerdb
+        environment:
+            - POSTGRES_USER=tp
+            - POSTGRES_PASSWORD=tp
+        ports:
+            - 5432:5432
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+        image: postgres
+volumes:
+    pgdata:
+        external: true
+        name: pgdata
