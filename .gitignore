@@ -739,3 +739,4 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/linux,macos,rider,csharp,windows,visualstudio,dotnetcore
 .idea/.idea.SWEN2-Tour-Planner.dir/.idea/indexLayout.xml
 .idea/.idea.SWEN2-Tour-Planner.dir/.idea/projectSettingsUpdater.xml
+/TourPlanner/.idea
