@@ -19,7 +19,8 @@ namespace TourPlanner.BusinessLogic.Map
             GeoCoordinate locationDataEnd = await request.GetGeoCodeAsync(adressEnd);
             MapCreator mapCreator = new MapCreator(locationDataStart, locationDataEnd);
             mapCreator.Zoom = 18;
-            mapCreator.Markers.Add(new GeoCoordinate(16.377229, 48.239676));
+            mapCreator.Markers.Add(locationDataStart);
+            mapCreator.Markers.Add(locationDataEnd);
 
             finalimage = mapCreator.GenerateImage(request);
             SaveImage("FHTW-map.png");

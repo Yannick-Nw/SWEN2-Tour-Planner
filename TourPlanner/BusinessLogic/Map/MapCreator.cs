@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -24,8 +25,14 @@ namespace TourPlanner.BusinessLogic.Map
 
         public int Zoom { get; set; } = 18;
         public bool CropImage { get; set; } = true;
+
         private readonly List<GeoCoordinate> markers = new();
         private Bitmap finalImage;
+
+        public void AddMarker(GeoCoordinate marker)
+        {
+            markers.Add(marker);
+        }
 
         public async Task<Bitmap> GenerateImage(MapAPIService api)
         {
@@ -53,39 +60,35 @@ namespace TourPlanner.BusinessLogic.Map
                 }
             }
 
-            PixelCalculator.Point topLeftTilePixel = new PixelCalculator.Point(topLeftTile.X * 256, topLeftTile.Y * 256);
+            Point topLeftTilePixel = new Point(topLeftTile.X * 256, topLeftTile.Y * 256);
 
             // Draw Markers
             foreach (var marker in markers)
             {
-                using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(Marker.PIN_RED_32px.GetResource().ToString());
-                Bitmap markerIcon = new Bitmap(stream);
-                PixelCalculator.Point globalPos = PixelCalculator.LatLonToPixel(marker.Lat, marker.Lon, Zoom);
-                PixelCalculator.Point relativePos = new PixelCalculator.Point(globalPos.X - topLeftTilePixel.X, globalPos.Y - topLeftTilePixel.Y);
+                //using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(Marker.PIN_RED_32px.GetResource().ToString());
+                //Bitmap markerIcon = new Bitmap(stream);
+
+                Bitmap markerIcon = MarkerUtils.GetMarkerImage(Marker.PIN_RED_32px);
+                Point globalPos = Point.LatLonToPixel(marker.Lat, marker.Lon, Zoom);
+                Point relativePos = new Point(globalPos.X - topLeftTilePixel.X, globalPos.Y - topLeftTilePixel.Y);
                 g.DrawImage(markerIcon, relativePos.X, relativePos.Y);
             }
 
             // Crop the image to the exact bounding box
             if (CropImage)
             {
-                PixelCalculator.Point bboxLeftTopGlobalPos = PixelCalculator.LatLonToPixel(maxLat, minLon, Zoom);
-                PixelCalculator.Point bboxRightBottomGlobalPos = PixelCalculator.LatLonToPixel(minLat, maxLon, Zoom);
-                PixelCalculator.Point bboxLeftTopRelativePos = new PixelCalculator.Point(bboxLeftTopGlobalPos.X - topLeftTilePixel.X, bboxLeftTopGlobalPos.Y - topLeftTilePixel.Y);
+                Point bboxLeftTopGlobalPos = Point.LatLonToPixel(maxLat, minLon, Zoom);
+                Point bboxRightBottomGlobalPos = Point.LatLonToPixel(minLat, maxLon, Zoom);
+                Point bboxLeftTopRelativePos = new Point(bboxLeftTopGlobalPos.X - topLeftTilePixel.X, bboxLeftTopGlobalPos.Y - topLeftTilePixel.Y);
                 int width = bboxRightBottomGlobalPos.X - bboxLeftTopGlobalPos.X;
                 int height = bboxRightBottomGlobalPos.Y - bboxLeftTopGlobalPos.Y;
                 finalImage = finalImage.Clone(new Rectangle(bboxLeftTopRelativePos.X, bboxLeftTopRelativePos.Y, width, height), finalImage.PixelFormat);
             }
-
             g.Dispose();
+            return finalImage;
         }
 
-
-
-
-
-
-
-
+        /*
         public Bitmap StitchTilesTogether(List<Bitmap> tiles)
         {
             int tileWidth = tiles[0].Width;
@@ -104,5 +107,6 @@ namespace TourPlanner.BusinessLogic.Map
 
             return output;
         }
+        */
     }
 }
