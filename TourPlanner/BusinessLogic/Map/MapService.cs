@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +20,8 @@ namespace TourPlanner.BusinessLogic.Map
             GeoCoordinate locationDataEnd = await request.GetGeoCodeAsync(adressEnd);
             MapCreator mapCreator = new MapCreator(locationDataStart, locationDataEnd);
             mapCreator.Zoom = 18;
-            mapCreator.Markers.Add(locationDataStart);
-            mapCreator.Markers.Add(locationDataEnd);
+            mapCreator.AddMarker(locationDataStart);
+            mapCreator.AddMarker(locationDataEnd);
 
             finalimage = mapCreator.GenerateImage(request);
             SaveImage("FHTW-map.png");

@@ -107,7 +107,7 @@ public class TourViewModel : BaseViewModel
                 logger.Info($"Tour data exported to: {dialog.FileName}");
             }
         }
-   
+
     }
     public void ImportTours()
     {
@@ -146,41 +146,41 @@ public class TourViewModel : BaseViewModel
     }
 
     public void AddTour()
+    {
+        var addTourWindow = new AddTourWindow();
+        if (addTourWindow.ShowDialog() == true)
         {
-            var addTourWindow = new AddTourWindow();
-            if (addTourWindow.ShowDialog() == true)
-            {
-                // Add the new tour to the list
-                Tours.Add(addTourWindow.NewTour);
-                logger.Info($"New Tour added: {addTourWindow.NewTour.Name}");
-            }
+            // Add the new tour to the list
+            Tours.Add(addTourWindow.NewTour);
+            logger.Info($"New Tour added: {addTourWindow.NewTour.Name}");
         }
-    
-        public void UpdateTour()
-        {
-            if (SelectedTour != null)
-            {
-                var updateTourWindow = new UpdateTourWindow(SelectedTour.Clone() as Tour); // Pass a clone of the selected tour
-                if (updateTourWindow.ShowDialog() == true)
-                {
-                    // Update the tour in the collection when the user confirms the changes
-                    int index = Tours.IndexOf(SelectedTour);
-                    Tours[index] = updateTourWindow.UpdatedTour;
-                    logger.Info($"Tour updated: {updateTourWindow.UpdatedTour.Name}");
-                }
-            }
-        }
+    }
 
-        public void DeleteTour()
+    public void UpdateTour()
+    {
+        if (SelectedTour != null)
         {
-            if (SelectedTour != null)
+            var updateTourWindow = new UpdateTourWindow(SelectedTour.Clone() as Tour); // Pass a clone of the selected tour
+            if (updateTourWindow.ShowDialog() == true)
             {
-                // Log the deletion attempt
-                logger.Info($"Deleting tour: {SelectedTour.Name}");
-
-                // Remove the selected tour from the collection
-                Tours.Remove(SelectedTour);
+                // Update the tour in the collection when the user confirms the changes
+                int index = Tours.IndexOf(SelectedTour);
+                Tours[index] = updateTourWindow.UpdatedTour;
+                logger.Info($"Tour updated: {updateTourWindow.UpdatedTour.Name}");
             }
         }
     }
-                                         
+
+    public void DeleteTour()
+    {
+        if (SelectedTour != null)
+        {
+            // Log the deletion attempt
+            logger.Info($"Deleting tour: {SelectedTour.Name}");
+
+            // Remove the selected tour from the collection
+            Tours.Remove(SelectedTour);
+        }
+    }
+}
+

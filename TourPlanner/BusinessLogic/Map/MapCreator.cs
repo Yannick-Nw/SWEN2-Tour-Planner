@@ -84,6 +84,7 @@ namespace TourPlanner.BusinessLogic.Map
                 int height = bboxRightBottomGlobalPos.Y - bboxLeftTopGlobalPos.Y;
                 finalImage = finalImage.Clone(new Rectangle(bboxLeftTopRelativePos.X, bboxLeftTopRelativePos.Y, width, height), finalImage.PixelFormat);
             }
+
             g.Dispose();
             return finalImage;
         }
