@@ -6,18 +6,25 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Drawing;
 using System.IO;
+using System.Globalization;
+using System.Text.Json;
 
 namespace TourPlanner.BusinessLogic.Map
 {
     internal class MapAPIService
     {
-        public async Task<string> GetGeoCodeAsync(string address, string apiKey)
+        private readonly string API_KEY;
+        public MapAPIService(string apiKey)
         {
-            string uri = $"https://api.openrouteservice.org/geocode/search?api_key={apiKey}&text={address}";
+            this.API_KEY = apiKey;
+        }
+        public async Task<GeoCoordinate> GetGeoCodeAsync(string address)
+        {
+            string uri = $"https://api.openrouteservice.org/geocode/search?api_key={API_KEY}&text={address}";
             using (HttpClient client = new HttpClient())
             {
                 HttpResponseMessage response = await client.GetAsync(uri);
-                return await response.Content.ReadAsStringAsync();
+                return ParseGeocodeResponse(await response.Content.ReadAsStringAsync());
             }
         }
 
@@ -34,9 +41,9 @@ namespace TourPlanner.BusinessLogic.Map
             }
         }
 
-        public async Task<string> GetDirectionsAsync(string startCoordinates, string endCoordinates, string apiKey)
+        public async Task<string> GetDirectionsAsync(string startCoordinates, string endCoordinates)
         {
-            string uri = $"https://api.openrouteservice.org/v2/directions/driving-car?api_key={apiKey}&start={startCoordinates}&end={endCoordinates}";
+            string uri = $"https://api.openrouteservice.org/v2/directions/driving-car?api_key={API_KEY}&start={startCoordinates}&end={endCoordinates}";
             using (HttpClient client = new HttpClient())
             {
                 HttpResponseMessage response = await client.GetAsync(uri);
@@ -44,6 +51,27 @@ namespace TourPlanner.BusinessLogic.Map
             }
         }
 
+        public GeoCoordinate ParseGeocodeResponse(string response)
+        {
+            JsonDocument doc = JsonDocument.Parse(response);
+            var root = doc.RootElement;
 
+            // Parse coordinates
+            var coordinates = root.GetProperty("features")[0].GetProperty("geometry").GetProperty("coordinates");
+            GeoCoordinate coordinatesData = new GeoCoordinate(coordinates[0].GetDouble(), coordinates[1].GetDouble());
+
+            /*
+            // Parse bbox
+            var bboxToken = root.GetProperty("bbox");
+            double[] bbox = new double[4];
+            int i = 0;
+            foreach (var b in bboxToken.EnumerateArray())
+            {
+                bbox[i++] = b.GetDouble();
+            }
+            */
+
+            return (coordinatesData);
+        }
     }
 }
