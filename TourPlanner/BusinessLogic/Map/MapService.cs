@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace TourPlanner.BusinessLogic.Map
     {
         private Bitmap finalImage;
 
-        public async Task GetMap(string apiKey, string adressStart, string adressEnd)
+        public async Task<string> GetMap(string apiKey, string adressStart, string adressEnd)
         {
             var request = new MapAPIService(apiKey);
             GeoCoordinate locationDataStart = await request.GetGeoCodeAsync(adressStart);
@@ -23,13 +24,20 @@ namespace TourPlanner.BusinessLogic.Map
             mapCreator.AddMarker(locationDataStart);
             mapCreator.AddMarker(locationDataEnd);
 
-            finalimage = mapCreator.GenerateImage(request);
-            SaveImage("FHTW-map.png");
+            finalImage = await mapCreator.GenerateImage(request);
+            string filePath = SaveImage(adressStart + "-" + adressEnd);
+            return filePath;
         }
 
-        public void SaveImage(string filename)
+        public string SaveImage(string filename)
         {
-            finalImage.Save(filename, ImageFormat.Png);
+            string directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "Images");
+            Directory.CreateDirectory(directoryPath); // Creates the directory if it doesn't exist
+
+            string filePath = Path.Combine(directoryPath, filename + ".png");
+            finalImage.Save(filePath, ImageFormat.Png);
+
+            return filePath;
         }
 
     }
