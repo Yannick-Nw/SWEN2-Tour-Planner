@@ -37,6 +37,8 @@ namespace TourPlanner
 
             // Configure log4net
             log4net.Config.XmlConfigurator.Configure(new FileInfo("log4net.config"));
+
+
            
         }
 

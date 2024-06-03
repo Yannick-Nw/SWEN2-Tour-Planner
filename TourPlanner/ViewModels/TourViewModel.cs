@@ -11,6 +11,8 @@ using Microsoft.Win32;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.IO;
+using TourPlanner.DataAccess.Repository;
+using System.Threading.Tasks;
 
 public class TourViewModel : BaseViewModel
 {
@@ -56,6 +58,7 @@ public class TourViewModel : BaseViewModel
     public ICommand ExportCommand { get; }
     public ICommand ImportCommand { get; }
 
+    string ;
 
     public TourViewModel()
     {
@@ -145,13 +148,15 @@ public class TourViewModel : BaseViewModel
         }
     }
 
-    public void AddTour()
+    public async Task AddTour()
     {
         var addTourWindow = new AddTourWindow();
         if (addTourWindow.ShowDialog() == true)
         {
             // Add the new tour to the list
             Tours.Add(addTourWindow.NewTour);
+            TourRepository addtour = new TourRepository;
+            await addtour.AddTourAsync(addTourWindow.NewTour);
             logger.Info($"New Tour added: {addTourWindow.NewTour.Name}");
         }
     }
