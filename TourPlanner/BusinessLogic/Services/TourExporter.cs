@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
+using TourPlanner.BusinessLogic.Models;
 
-namespace TourPlanner.Models
+namespace TourPlanner.BusinessLogic.Services
 {
-    public class TourExporter
+    public class TourExporter : ITourExporter
     {
         public void ExportToursToJson(IEnumerable<Tour> tours, string filePath)
         {

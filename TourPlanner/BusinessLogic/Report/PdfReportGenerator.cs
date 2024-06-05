@@ -4,12 +4,12 @@ using QuestPDF.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TourPlanner.Models;
-using System.Windows.Forms; 
+using System.Windows.Forms;
+using TourPlanner.BusinessLogic.Models;
 
 //pdfs get saved in the documents folder on your pc
 
-namespace TourPlanner.Report
+namespace TourPlanner.BusinessLogic.Report
 {
     public static class PdfReportGenerator
     {
@@ -47,11 +47,11 @@ namespace TourPlanner.Report
 
                             if (!string.IsNullOrEmpty(tour.TourImage))
                             {
-                               
+
                                 column.Item().Image(tour.TourImage);
 
                             }
-                           
+
                             column.Item().Text("Tour Logs:").FontSize(16).SemiBold().FontColor(Colors.Red.Darken1);
 
                             foreach (var log in tour.TourLogs)

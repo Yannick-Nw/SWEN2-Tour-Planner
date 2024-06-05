@@ -1,95 +1,144 @@
-using TourPlanner.Views;
-using TourPlanner.Models;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
 using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows.Input;
+
 using log4net;
-using TourPlanner.ViewModels.Abstract;
-using TourPlanner.ViewModels;
-using Microsoft.Win32;
 using System.Collections.Generic;
-using Newtonsoft.Json;
-using System.IO;
+using TourPlanner.Views;
+using Microsoft.Win32;
+using TourPlanner.BusinessLogic.Models;
+using TourPlanner.BusinessLogic.Services;
+using TourPlanner.ViewModels.Abstract;
 
-public class TourViewModel : BaseViewModel
+
+namespace TourPlanner.ViewModels
 {
-    private static readonly ILog logger = LogManager.GetLogger(typeof(TourViewModel));
-    private string _searchText;
-    public string SearchText
+    public class TourViewModel : BaseViewModel, INotifyPropertyChanged
     {
-        get { return _searchText; }
-        set
+        private static readonly ILog logger = LogManager.GetLogger(typeof(TourViewModel));
+
+        private TourService _tourService;
+
+        private ObservableCollection<Tour> _tours;
+        public ObservableCollection<Tour> Tours
         {
-            _searchText = value;
-            OnPropertyChanged(nameof(SearchText));
+            get { return _tours; }
+            set
+            {
+                _tours = value;
+                OnPropertyChanged(nameof(Tours));
+            }
         }
-    }
 
-    private ObservableCollection<Tour> _filteredTours;
-    public ObservableCollection<Tour> FilteredTours
-    {
-        get { return _filteredTours; }
-        set
+        private ObservableCollection<Tour> _filteredTours;
+        public ObservableCollection<Tour> FilteredTours
         {
-            _filteredTours = value;
-            OnPropertyChanged(nameof(FilteredTours));
+            get { return _filteredTours; }
+            set
+            {
+                _filteredTours = value;
+                OnPropertyChanged(nameof(FilteredTours));
+            }
         }
-    }
-    public ObservableCollection<Tour> Tours { get; set; }
 
-    private Tour _selectedTour;
-    public Tour SelectedTour
-    {
-        get { return _selectedTour; }
-        set
+        private Tour _selectedTour;
+        public Tour SelectedTour
         {
-            _selectedTour = value;
-            OnPropertyChanged(nameof(SelectedTour));
+            get { return _selectedTour; }
+            set
+            {
+                _selectedTour = value;
+                OnPropertyChanged(nameof(SelectedTour));
+            }
         }
-    }
 
-    public ICommand AddCommand { get; }
-    public ICommand UpdateCommand { get; }
-    public ICommand DeleteCommand { get; }
-    public ICommand SearchCommand { get; }
-    public ICommand ExportCommand { get; }
-    public ICommand ImportCommand { get; }
-
-
-    public TourViewModel()
-    {
-        Tours = new ObservableCollection<Tour>();
-
-        AddCommand = new RelayCommand(obj => AddTour());
-        UpdateCommand = new RelayCommand(obj => UpdateTour(), obj => SelectedTour != null);
-        DeleteCommand = new RelayCommand(obj => DeleteTour(), obj => SelectedTour != null);
-        SearchCommand = new RelayCommand(obj => Search());
-        ExportCommand = new RelayCommand(obj => ExportTours(), obj => SelectedTour != null);
-        ImportCommand = new RelayCommand(obj => ImportTours());
-        FilteredTours = Tours;
-
-        // Example tours for testing
-        Tours.Add(new Tour { Name = "Tour 1", Description = "Description for Tour 1", From = "Starting point for Tour 1", To = "Destination for Tour 1", TransportType = TransportType.Walking, Distance = 100.5, EstimatedTime = TimeSpan.FromHours(2) });
-        Tours.Add(new Tour { Name = "Tour 2", Description = "Description for Tour 2", From = "Starting point for Tour 2", To = "Destination for Tour 2", TransportType = TransportType.Bike, Distance = 75.2, EstimatedTime = TimeSpan.FromHours(1.5) });
-    }
-    public Array TransportTypes => Enum.GetValues(typeof(TransportType));
-    private void Search()
-    {
-        if (!string.IsNullOrWhiteSpace(SearchText))
+        private string _searchText;
+        public string SearchText
         {
-            FilteredTours = new ObservableCollection<Tour>(Tours.Where(t => t.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase)));
+            get { return _searchText; }
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged(nameof(SearchText));
+                Search(); // Trigger search whenever SearchText changes
+            }
         }
-        else
+
+        public ICommand AddCommand { get; }
+        public ICommand UpdateCommand { get; }
+        public ICommand DeleteCommand { get; }
+
+        public ICommand SearchCommand { get; }
+        public ICommand ExportCommand { get; }
+        public ICommand ImportCommand { get; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public TourViewModel(TourService tourService)
         {
+            _tourService = tourService;
+
+            // Initialize commands
+            AddCommand = new RelayCommand(obj => AddTour());
+            UpdateCommand = new RelayCommand(obj => UpdateTour(), obj => SelectedTour != null);
+            DeleteCommand = new RelayCommand(obj => DeleteTour(), obj => SelectedTour != null);
+
+            SearchCommand = new RelayCommand(obj => Search());
+            ExportCommand = new RelayCommand(obj => ExportTours(), obj => SelectedTour != null);
+            ImportCommand = new RelayCommand(obj => ImportTours());
+
+            // Example tours for testing
+            Tours = new ObservableCollection<Tour>();
+            Tours.Add(new Tour { Name = "Tour 1", Description = "Description for Tour 1" });
+            Tours.Add(new Tour { Name = "Tour 2", Description = "Description for Tour 2" });
+
             FilteredTours = Tours;
         }
-    }
-    public void ExportTours()
-    {
-        if (SelectedTour != null)
+
+
+        private void AddTour()
         {
-            // Show a save file dialog to select the file path for exporting
+            var addTourWindow = new AddTourWindow();
+            if (addTourWindow.ShowDialog() == true)
+            {
+                logger.Info("Adding new tour: " + addTourWindow.NewTour.Name);
+                _tourService.AddTour(Tours, addTourWindow.NewTour);
+            }
+        }
+
+        private void UpdateTour()
+        {
+            var updateTourWindow = new UpdateTourWindow(SelectedTour.Clone() as Tour);
+            if (updateTourWindow.ShowDialog() == true)
+            {
+                logger.Info("Updating tour: " + SelectedTour.Name);
+                _tourService.UpdateTour(Tours, SelectedTour, updateTourWindow.UpdatedTour);
+            }
+        }
+
+        private void DeleteTour()
+        {
+            logger.Info("Deleting tour: " + SelectedTour.Name);
+            _tourService.DeleteTour(Tours, SelectedTour);
+        }
+
+        private void Search()
+        {
+            if (!string.IsNullOrWhiteSpace(SearchText))
+            {
+                FilteredTours = new ObservableCollection<Tour>(Tours.Where(t => t.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase)));
+            }
+            else
+            {
+                FilteredTours = Tours;
+            }
+        }
+
+        private void ExportTours()
+        {
+            logger.Info("Exporting tour: " + SelectedTour.Name);
             var dialog = new SaveFileDialog
             {
                 Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
@@ -98,89 +147,33 @@ public class TourViewModel : BaseViewModel
 
             if (dialog.ShowDialog() == true)
             {
-                // Create a list to hold only the selected tour
-                List<Tour> selectedTourList = new List<Tour> { SelectedTour };
-
-                TourExporter exporter = new TourExporter();
-                exporter.ExportToursToJson(selectedTourList, dialog.FileName);
-
-                logger.Info($"Tour data exported to: {dialog.FileName}");
+                _tourService.ExportToursToJson(new List<Tour> { SelectedTour }, dialog.FileName);
             }
         }
-   
-    }
-    public void ImportTours()
-    {
-        // Show a file dialog to select the JSON file to import
-        var dialog = new OpenFileDialog
-        {
-            Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
-            Title = "Import Tour Data"
-        };
 
-        if (dialog.ShowDialog() == true)
+        private void ImportTours()
         {
-            try
+            logger.Info("Importing tours.");
+            var dialog = new OpenFileDialog
             {
-                // Read the JSON data from the selected file
-                string jsonData = File.ReadAllText(dialog.FileName);
+                Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
+                Title = "Import Tour Data"
+            };
 
-                // Deserialize the JSON data into a list of tours
-                List<Tour> importedTours = JsonConvert.DeserializeObject<List<Tour>>(jsonData);
-
-                // Add the imported tours to the existing tour collection
+            if (dialog.ShowDialog() == true)
+            {
+                List<Tour> importedTours = _tourService.ImportToursFromJson(dialog.FileName);
                 foreach (Tour tour in importedTours)
                 {
                     Tours.Add(tour);
-                    logger.Info($"Tour imported: {tour.Name}");
-                }
-
-                logger.Info($"Tour data imported from: {dialog.FileName}");
-            }
-            catch (Exception ex)
-            {
-                // Log any exceptions that occur during the import process
-                logger.Error($"Error importing tour data: {ex.Message}");
-            }
-        }
-    }
-
-    public void AddTour()
-        {
-            var addTourWindow = new AddTourWindow();
-            if (addTourWindow.ShowDialog() == true)
-            {
-                // Add the new tour to the list
-                Tours.Add(addTourWindow.NewTour);
-                logger.Info($"New Tour added: {addTourWindow.NewTour.Name}");
-            }
-        }
-    
-        public void UpdateTour()
-        {
-            if (SelectedTour != null)
-            {
-                var updateTourWindow = new UpdateTourWindow(SelectedTour.Clone() as Tour); // Pass a clone of the selected tour
-                if (updateTourWindow.ShowDialog() == true)
-                {
-                    // Update the tour in the collection when the user confirms the changes
-                    int index = Tours.IndexOf(SelectedTour);
-                    Tours[index] = updateTourWindow.UpdatedTour;
-                    logger.Info($"Tour updated: {updateTourWindow.UpdatedTour.Name}");
                 }
             }
         }
 
-        public void DeleteTour()
+        private void OnPropertyChanged(string propertyName)
         {
-            if (SelectedTour != null)
-            {
-                // Log the deletion attempt
-                logger.Info($"Deleting tour: {SelectedTour.Name}");
-
-                // Remove the selected tour from the collection
-                Tours.Remove(SelectedTour);
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-                                         
+}
+
