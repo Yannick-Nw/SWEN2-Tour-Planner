@@ -1,35 +1,67 @@
-﻿using TourPlanner.ViewModels.Abstract;
+﻿using TourPlanner.BusinessLogic.Services;
+using TourPlanner.ViewModels.Abstract;
 
 namespace TourPlanner.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        public TourViewModel TourViewModel { get; }
-        public TourLogViewModel TourLogViewModel { get; }
-        public ReportViewModel ReportViewModel { get; }
+        private TourViewModel _tourViewModel;
+        private TourLogViewModel _tourLogViewModel;
+        private ReportViewModel _reportViewModel;
 
         public MainViewModel()
         {
-            TourViewModel = new TourViewModel();
-            TourLogViewModel = new TourLogViewModel { SelectedTour = TourViewModel.SelectedTour };
-            ReportViewModel = new ReportViewModel
+            TourService tourService = new TourService(); // Create an instance of TourService
+            _tourViewModel = new TourViewModel(tourService); // Pass tourService to TourViewModel constructor
+            _tourLogViewModel = new TourLogViewModel { SelectedTour = _tourViewModel.SelectedTour };
+            _reportViewModel = new ReportViewModel
             {
-                SelectedTour = TourViewModel.SelectedTour,
-                Tours = TourViewModel.Tours
+                SelectedTour = _tourViewModel.SelectedTour,
+                Tours = _tourViewModel.Tours
             };
 
-            TourViewModel.PropertyChanged += (sender, args) =>
+            _tourViewModel.PropertyChanged += (sender, args) =>
             {
-                if (args.PropertyName == nameof(TourViewModel.SelectedTour))
+                if (args.PropertyName == nameof(_tourViewModel.SelectedTour))
                 {
-                    TourLogViewModel.SelectedTour = TourViewModel.SelectedTour;
-                    ReportViewModel.SelectedTour = TourViewModel.SelectedTour;
+                    _tourLogViewModel.SelectedTour = _tourViewModel.SelectedTour;
+                    _reportViewModel.SelectedTour = _tourViewModel.SelectedTour;
                 }
-                else if (args.PropertyName == nameof(TourViewModel.Tours))
+                else if (args.PropertyName == nameof(_tourViewModel.Tours))
                 {
-                    ReportViewModel.Tours = TourViewModel.Tours;
+                    _reportViewModel.Tours = _tourViewModel.Tours;
                 }
             };
+        }
+
+        public TourViewModel TourViewModel
+        {
+            get { return _tourViewModel; }
+            set
+            {
+                _tourViewModel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public TourLogViewModel TourLogViewModel
+        {
+            get { return _tourLogViewModel; }
+            set
+            {
+                _tourLogViewModel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ReportViewModel ReportViewModel
+        {
+            get { return _reportViewModel; }
+            set
+            {
+                _reportViewModel = value;
+                OnPropertyChanged();
+            }
         }
     }
 }

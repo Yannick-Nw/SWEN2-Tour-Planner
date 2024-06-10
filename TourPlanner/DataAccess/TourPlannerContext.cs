@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Configuration;
-using TourPlanner.Models;
 using log4net;
+using TourPlanner.BusinessLogic.Models;
 
 namespace TourPlanner.DataAccess
 {

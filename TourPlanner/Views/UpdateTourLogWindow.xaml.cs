@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using TourPlanner.Models;
+using TourPlanner.BusinessLogic.Models;
 
 namespace TourPlanner.Views
 {

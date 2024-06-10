@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
-using TourPlanner.Models;
-using TourPlanner.Report;
+using TourPlanner.BusinessLogic.Models;
+using TourPlanner.BusinessLogic.Report;
 using TourPlanner.ViewModels.Abstract;
 
 namespace TourPlanner.ViewModels
