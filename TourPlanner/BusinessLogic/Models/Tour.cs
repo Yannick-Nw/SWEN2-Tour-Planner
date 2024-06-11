@@ -25,13 +25,9 @@ namespace TourPlanner.BusinessLogic.Models
         public string From { get; set; }
         [Required]
         public string To { get; set; }
-        [Required]
         public TransportType TransportType { get; set; }
-        [Required]
         public double Distance { get; set; }
-        [Required]
         public TimeSpan EstimatedTime { get; set; }
-        [Required]
         public string TourImage { get; set; }
         public int Popularity { get; set; }
         public int ChildFriendliness
