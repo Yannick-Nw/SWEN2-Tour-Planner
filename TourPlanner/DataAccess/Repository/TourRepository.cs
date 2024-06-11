@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TourPlanner.BusinessLogic.Models;
+using TourPlanner.BusinessLogic.Map;
+//using Windows.Services.Maps;
 
 namespace TourPlanner.DataAccess.Repository
 {
@@ -18,29 +20,32 @@ namespace TourPlanner.DataAccess.Repository
 
         public async Task AddTourAsync(Tour tour)
         {
-            await context.Tours.AddAsync(tour);
-            await context.SaveChangesAsync();
+            MapService mapService = new MapService();
+            string filePath = await mapService.GetMap(tour.From, tour.To);
+            tour.TourImage = filePath;
+            context.Tours.Add(tour);
+            context.SaveChanges();
         }
 
-        public async Task<List<Tour>> GetAllToursAsync()
+        public List<Tour> GetAllTours()
         {
-            return await context.Tours.ToListAsync();
+            return context.Tours.ToList();
         }
 
-        public async Task<Tour> GetTourByIdAsync(int id)
+        public Tour GetTourById(int id)
         {
-            return await context.Tours.FindAsync(id);
+            return context.Tours.Find(id);
         }
-        public async Task UpdateTourAsync(Tour tour)
+        public void UpdateTour(Tour tour)
         {
             context.Tours.Update(tour);
-            await context.SaveChangesAsync();
+            context.SaveChanges();
         }
 
-        public async Task RemoveTourAsync(Tour tour)
+        public void RemoveTour(Tour tour)
         {
             context.Tours.Remove(tour);
-            await context.SaveChangesAsync();
+            context.SaveChanges();
         }
     }
 }

@@ -1,7 +1,7 @@
 name: tourplannerdb
 services:
   postgres:
-    image: postgis/postgis:15-3.3
+    image: postgis/postgis:latest
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-tp}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-tp}
@@ -17,10 +17,10 @@ services:
   
   pgadmin:
     container_name: pgadmin_container
-    image: dpage/pgadmin4:6.18
+    image: dpage/pgadmin4:latest
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
       PGADMIN_CONFIG_SERVER_MODE: 'False'
     volumes:
        - pgadmin:/var/lib/pgadmin

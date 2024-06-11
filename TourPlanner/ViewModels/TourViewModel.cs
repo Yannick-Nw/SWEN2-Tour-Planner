@@ -11,6 +11,9 @@ using Microsoft.Win32;
 using TourPlanner.BusinessLogic.Models;
 using TourPlanner.BusinessLogic.Services;
 using TourPlanner.ViewModels.Abstract;
+using Windows.Networking.Connectivity;
+using TourPlanner.DataAccess;
+using TourPlanner.DataAccess.Repository;
 
 
 namespace TourPlanner.ViewModels
@@ -66,6 +69,8 @@ namespace TourPlanner.ViewModels
             }
         }
 
+        //private TourPlannerContext context { get; set; }
+        private TourRepository connection { get; set; }
         public ICommand AddCommand { get; }
         public ICommand UpdateCommand { get; }
         public ICommand DeleteCommand { get; }
@@ -81,6 +86,9 @@ namespace TourPlanner.ViewModels
             _tourService = tourService;
 
             // Initialize commands
+            TourPlannerContext context = new TourPlannerContext();
+            connection = new TourRepository(context);
+
             AddCommand = new RelayCommand(obj => AddTour());
             UpdateCommand = new RelayCommand(obj => UpdateTour(), obj => SelectedTour != null);
             DeleteCommand = new RelayCommand(obj => DeleteTour(), obj => SelectedTour != null);
@@ -93,6 +101,11 @@ namespace TourPlanner.ViewModels
             Tours = new ObservableCollection<Tour>();
             Tours.Add(new Tour { Name = "Tour 1", Description = "Description for Tour 1" });
             Tours.Add(new Tour { Name = "Tour 2", Description = "Description for Tour 2" });
+            List<Tour> dbtours = connection.GetAllTours();
+            foreach (Tour tour in dbtours)
+            {
+                Tours.Add(new Tour { Name = tour.Name, Description = tour.Description });
+            }
 
             FilteredTours = Tours;
         }
@@ -104,6 +117,7 @@ namespace TourPlanner.ViewModels
             if (addTourWindow.ShowDialog() == true)
             {
                 logger.Info("Adding new tour: " + addTourWindow.NewTour.Name);
+                connection.AddTourAsync(addTourWindow.NewTour);
                 _tourService.AddTour(Tours, addTourWindow.NewTour);
             }
         }
@@ -114,6 +128,7 @@ namespace TourPlanner.ViewModels
             if (updateTourWindow.ShowDialog() == true)
             {
                 logger.Info("Updating tour: " + SelectedTour.Name);
+                connection.UpdateTour(SelectedTour);
                 _tourService.UpdateTour(Tours, SelectedTour, updateTourWindow.UpdatedTour);
             }
         }
@@ -121,6 +136,7 @@ namespace TourPlanner.ViewModels
         private void DeleteTour()
         {
             logger.Info("Deleting tour: " + SelectedTour.Name);
+            connection.RemoveTour(SelectedTour);
             _tourService.DeleteTour(Tours, SelectedTour);
         }
 
