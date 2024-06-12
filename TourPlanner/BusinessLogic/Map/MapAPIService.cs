@@ -14,10 +14,12 @@ namespace TourPlanner.BusinessLogic.Map
     internal class MapAPIService
     {
         private readonly string API_KEY;
+
         public MapAPIService(string apiKey)
         {
             this.API_KEY = apiKey;
         }
+
         public async Task<GeoCoordinate> GetGeoCodeAsync(string address)
         {
             string uri = $"https://api.openrouteservice.org/geocode/search?api_key={API_KEY}&text={address}";
@@ -33,10 +35,33 @@ namespace TourPlanner.BusinessLogic.Map
             string uri = $"https://tile.openstreetmap.org/{zoom}/{tile.X}/{tile.Y}.png";
             using (HttpClient client = new HttpClient())
             {
+                // Adding a custom User-Agent header
+                client.DefaultRequestHeaders.UserAgent.ParseAdd("TourPlanner/1.0 Project for the SWEN-course");
+
                 HttpResponseMessage response = await client.GetAsync(uri);
+
+                // Check if the HTTP request was successful
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new HttpRequestException($"Failed to fetch tile image. Status code: {response.StatusCode}");
+                }
+
                 using (Stream stream = await response.Content.ReadAsStreamAsync())
                 {
-                    return new Bitmap(stream);
+                    // Check if the stream is valid
+                    if (stream == null || stream.Length == 0)
+                    {
+                        throw new ArgumentException("Stream is null or empty.");
+                    }
+
+                    try
+                    {
+                        return new Bitmap(stream);
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        throw new ArgumentException("The stream does not contain a valid image.", ex);
+                    }
                 }
             }
         }
