@@ -1,3 +1,6 @@
+# Ignore all files in the Images directory
+TourPlanner/BusinessLogic/Map/Images/
+
 # Created by https://www.toptal.com/developers/gitignore/api/linux,macos,rider,csharp,windows,visualstudio,dotnetcore
 # Edit at https://www.toptal.com/developers/gitignore?templates=linux,macos,rider,csharp,windows,visualstudio,dotnetcore
 

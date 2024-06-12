@@ -73,7 +73,8 @@ namespace TourPlanner.BusinessLogic.Map
             string currentDirectory = startDirectory;
             while (!string.IsNullOrEmpty(currentDirectory))
             {
-                string potentialPath = Path.Combine(currentDirectory, "Map", "Images");
+                string potentialPath = Path.Combine(currentDirectory, "BusinessLogic", "Map", "Images");
+                //C:\Users\...\TourPlanner\BusinessLogic\Map\Images\
                 if (Directory.Exists(potentialPath))
                 {
                     return potentialPath;
@@ -81,13 +82,16 @@ namespace TourPlanner.BusinessLogic.Map
                 currentDirectory = Directory.GetParent(currentDirectory)?.FullName;
             }
 
-            // Create the directory if it doesn't exist
+            return null;
+
+            /* Create the directory if it doesn't exist
             string targetPath = Path.Combine(AppContext.BaseDirectory, "Map", "Images");
             if (!Directory.Exists(targetPath))
             {
                 Directory.CreateDirectory(targetPath);
             }
             return targetPath;
+            */
         }
     }
 }
