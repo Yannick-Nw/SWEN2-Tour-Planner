@@ -117,10 +117,27 @@ namespace TourPlanner.ViewModels
             if (addTourWindow.ShowDialog() == true)
             {
                 logger.Info("Adding new tour: " + addTourWindow.NewTour.Name);
-                connection.AddTourAsync(addTourWindow.NewTour);
+
+                // Call asynchronously without waiting
+                connection.AddTourAsync(addTourWindow.NewTour).ContinueWith(task =>
+                {
+                    if (task.Exception != null)
+                    {
+                        // Iterate through all AggregateExceptions
+                        foreach (var ex in task.Exception.InnerExceptions)
+                        {
+                            logger.Error("An error occurred while adding the tour: " + ex.Message);
+                            // Here we could also add user notification
+                        }
+                        throw new InvalidOperationException("An error occurred while adding the tour.");
+                    }
+                });
+
                 _tourService.AddTour(Tours, addTourWindow.NewTour);
             }
         }
+
+
 
         private void UpdateTour()
         {

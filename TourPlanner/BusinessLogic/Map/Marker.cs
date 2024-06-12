@@ -38,7 +38,7 @@ namespace TourPlanner.BusinessLogic.Map
                 throw new DirectoryNotFoundException("Resources directory not found.");
             }
 
-            resourcePath = Path.Combine(resourcePath, "Map", "Resources", filename);
+            resourcePath = Path.Combine(resourcePath, filename);
             Console.WriteLine($"Resource path: {resourcePath}"); // Log the resource path
             return resourcePath;
         }
@@ -48,10 +48,11 @@ namespace TourPlanner.BusinessLogic.Map
             string currentDirectory = startDirectory;
             while (!string.IsNullOrEmpty(currentDirectory))
             {
-                string potentialPath = Path.Combine(currentDirectory, "Map", "Resources");
+                string potentialPath = Path.Combine(currentDirectory, "BusinessLogic", "Map", "Resources");
+                //C:\Users\...\TourPlanner\BusinessLogic\Map\resources\
                 if (Directory.Exists(potentialPath))
                 {
-                    return currentDirectory;
+                    return potentialPath;
                 }
                 currentDirectory = Directory.GetParent(currentDirectory)?.FullName;
             }
