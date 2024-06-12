@@ -104,7 +104,20 @@ namespace TourPlanner.ViewModels
             List<Tour> dbtours = connection.GetAllTours();
             foreach (Tour tour in dbtours)
             {
-                Tours.Add(new Tour { Name = tour.Name, Description = tour.Description });
+                Tours.Add(new Tour
+                {
+                    Id = tour.Id,
+                    Name = tour.Name,
+                    Description = tour.Description,
+                    From = tour.From,
+                    To = tour.To,
+                    TransportType = tour.TransportType,
+                    Distance = tour.Distance,
+                    EstimatedTime = tour.EstimatedTime,
+                    TourImage = tour.TourImage,
+                    Popularity = tour.Popularity,
+                    TourLogs = tour.TourLogs // Assuming deep copy or reference is acceptable here
+                });
             }
 
             FilteredTours = Tours;

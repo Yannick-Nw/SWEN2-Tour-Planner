@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TourPlanner.BusinessLogic.Models;
 using TourPlanner.BusinessLogic.Map;
+using System.Diagnostics;
 //using Windows.Services.Maps;
 
 namespace TourPlanner.DataAccess.Repository
@@ -44,8 +45,38 @@ namespace TourPlanner.DataAccess.Repository
 
         public void RemoveTour(Tour tour)
         {
-            context.Tours.Remove(tour);
-            context.SaveChanges();
+            if (tour == null)
+            {
+                throw new ArgumentNullException(nameof(tour), "Tour entity cannot be null.");
+            }
+            Debug.WriteLine(tour.ToString);
+
+            // Log the ID and state of the Tour entity before attempting to delete
+            Debug.WriteLine($"Attempting to remove tour with ID: {tour.Id}");
+            Debug.WriteLine($"Tour state before deletion: {context.Entry(tour).State}");
+
+            // Ensure the entity has a permanent ID
+            if (tour.Id <= 0)
+            {
+                throw new InvalidOperationException("The tour entity has a temporary ID. Ensure the entity has a permanent ID before attempting to delete.");
+            }
+
+            // Retrieve the tour from the database to ensure it is tracked by the context
+            var tourToDelete = context.Tours.SingleOrDefault(t => t.Id == tour.Id);
+            if (tourToDelete != null)
+            {
+                context.Tours.Remove(tourToDelete);
+                context.SaveChanges();
+
+                // Log success
+                Debug.WriteLine($"Successfully removed tour with ID: {tour.Id}");
+            }
+            else
+            {
+                throw new InvalidOperationException($"The tour entity with ID {tour.Id} was not found in the database.");
+            }
         }
+
+
     }
 }
