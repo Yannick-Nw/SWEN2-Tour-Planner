@@ -12,7 +12,7 @@ namespace TourPlanner.BusinessLogic.Models
         Bike,
         Car
     }
-    public class Tour : ICloneable
+    public class Tour 
     {
 
         [Key]
@@ -58,39 +58,9 @@ namespace TourPlanner.BusinessLogic.Models
             TourLogs = [];
           
         }
+        
 
-        // Clone method
-        public object Clone()
-        {
-            // Clone existing properties
-            var clonedTour = new Tour
-            {
-                Name = Name,
-                Description = Description,
-                From = From,
-                To = To,
-                TransportType = TransportType,
-                Distance = Distance,
-                EstimatedTime = EstimatedTime,
-                TourImage = TourImage
-            };
-
-            // Clone tour logs
-            foreach (var tourLog in TourLogs)
-            {
-                clonedTour.TourLogs.Add(new TourLog
-                {
-                    DateTime = tourLog.DateTime,
-                    Comment = tourLog.Comment,
-                    Difficulty = tourLog.Difficulty,
-                    TotalDistance = tourLog.TotalDistance,
-                    TotalTime = tourLog.TotalTime,
-                    Rating = tourLog.Rating
-                });
-            }
-
-            return clonedTour;
-        }
+        
     }
 }
 

@@ -96,11 +96,10 @@ namespace TourPlanner.ViewModels
             SearchCommand = new RelayCommand(obj => Search());
             ExportCommand = new RelayCommand(obj => ExportTours(), obj => SelectedTour != null);
             ImportCommand = new RelayCommand(obj => ImportTours());
-
+            /*
             // Example tours for testing
             Tours = new ObservableCollection<Tour>();
-            Tours.Add(new Tour { Name = "Tour 1", Description = "Description for Tour 1" });
-            Tours.Add(new Tour { Name = "Tour 2", Description = "Description for Tour 2" });
+     
             List<Tour> dbtours = connection.GetAllTours();
             foreach (Tour tour in dbtours)
             {
@@ -119,8 +118,15 @@ namespace TourPlanner.ViewModels
                     TourLogs = tour.TourLogs // Assuming deep copy or reference is acceptable here
                 });
             }
+            */
 
+
+            // Load tours from database
+            Tours = new ObservableCollection<Tour>(connection.GetAllTours());
+
+            // Initialize FilteredTours with all tours
             FilteredTours = Tours;
+           
         }
 
 
@@ -154,7 +160,7 @@ namespace TourPlanner.ViewModels
 
         private void UpdateTour()
         {
-            var updateTourWindow = new UpdateTourWindow(SelectedTour.Clone() as Tour);
+            var updateTourWindow = new UpdateTourWindow(SelectedTour);
             if (updateTourWindow.ShowDialog() == true)
             {
                 logger.Info("Updating tour: " + SelectedTour.Name);
