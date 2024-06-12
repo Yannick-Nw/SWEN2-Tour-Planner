@@ -30,14 +30,50 @@ namespace TourPlanner.BusinessLogic.Map
         public static string GetResource(Marker marker)
         {
             string filename = MarkerFilenames[marker] + ".png";
-            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", filename);
+            string baseDirectory = AppContext.BaseDirectory;
+            string resourcePath = FindDirectoryWithResources(baseDirectory);
+
+            if (resourcePath == null)
+            {
+                throw new DirectoryNotFoundException("Resources directory not found.");
+            }
+
+            resourcePath = Path.Combine(resourcePath, "Map", "Resources", filename);
+            Console.WriteLine($"Resource path: {resourcePath}"); // Log the resource path
+            return resourcePath;
+        }
+
+        private static string FindDirectoryWithResources(string startDirectory)
+        {
+            string currentDirectory = startDirectory;
+            while (!string.IsNullOrEmpty(currentDirectory))
+            {
+                string potentialPath = Path.Combine(currentDirectory, "Map", "Resources");
+                if (Directory.Exists(potentialPath))
+                {
+                    return currentDirectory;
+                }
+                currentDirectory = Directory.GetParent(currentDirectory)?.FullName;
+            }
+            return null;
         }
 
         public static Bitmap GetMarkerImage(Marker marker)
         {
             string resourcePath = GetResource(marker);
-            return new Bitmap(resourcePath);
-        }
+            if (!File.Exists(resourcePath))
+            {
+                throw new FileNotFoundException($"The file '{resourcePath}' does not exist.");
+            }
 
+            try
+            {
+                return new Bitmap(resourcePath);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException($"Failed to load the image from '{resourcePath}'. Ensure the file is a valid PNG image.", ex);
+            }
+        }
     }
 }
