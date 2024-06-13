@@ -39,35 +39,9 @@ namespace TourPlanner.DataAccess.Repository
         }
         public void UpdateTour(Tour tour)
         {
-            if (tour == null)
-            {
-                throw new ArgumentNullException(nameof(tour), "Tour entity cannot be null.");
-            }
-
-            if (tour.Id <= 0)
-            {
-                throw new InvalidOperationException("The tour entity has wrong ID for update.");
-            }
-
-            // Find the entity in the database
-            var existingTour = context.Tours.Find(tour.Id);
-            if (existingTour != null)
-            {
-                // If found, update the current values
-                context.Entry(existingTour).CurrentValues.SetValues(tour);
-            }
-            else
-            {
-                // If not found, attach the new entity and mark it as modified
-                context.Tours.Attach(tour);
-                context.Entry(tour).State = EntityState.Modified;
-            }
-
+            context.Tours.Update(tour);
             context.SaveChanges();
         }
-
-
-
 
         public void RemoveTour(Tour tour)
         {

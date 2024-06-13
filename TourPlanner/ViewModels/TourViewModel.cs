@@ -164,8 +164,7 @@ namespace TourPlanner.ViewModels
             if (updateTourWindow.ShowDialog() == true)
             {
                 logger.Info("Updating tour: " + SelectedTour.Name);
-                updateTourWindow.UpdatedTour.Id = SelectedTour.Id;
-                connection.UpdateTour(updateTourWindow.UpdatedTour);
+                connection.UpdateTour(SelectedTour);
                 _tourService.UpdateTour(Tours, SelectedTour, updateTourWindow.UpdatedTour);
             }
         }
