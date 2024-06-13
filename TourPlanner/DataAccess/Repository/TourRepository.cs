@@ -39,9 +39,35 @@ namespace TourPlanner.DataAccess.Repository
         }
         public void UpdateTour(Tour tour)
         {
-            context.Tours.Update(tour);
+            if (tour == null)
+            {
+                throw new ArgumentNullException(nameof(tour), "Tour entity cannot be null.");
+            }
+
+            if (tour.Id <= 0)
+            {
+                throw new InvalidOperationException("The tour entity has wrong ID for update.");
+            }
+
+            // Find the entity in the database
+            var existingTour = context.Tours.Find(tour.Id);
+            if (existingTour != null)
+            {
+                // If found, update the current values
+                context.Entry(existingTour).CurrentValues.SetValues(tour);
+            }
+            else
+            {
+                // If not found, attach the new entity and mark it as modified
+                context.Tours.Attach(tour);
+                context.Entry(tour).State = EntityState.Modified;
+            }
+
             context.SaveChanges();
         }
+
+
+
 
         public void RemoveTour(Tour tour)
         {
@@ -49,7 +75,7 @@ namespace TourPlanner.DataAccess.Repository
             {
                 throw new ArgumentNullException(nameof(tour), "Tour entity cannot be null.");
             }
-            Debug.WriteLine(tour.ToString);
+            //Debug.WriteLine(tour.ToString);
 
             // Log the ID and state of the Tour entity before attempting to delete
             Debug.WriteLine($"Attempting to remove tour with ID: {tour.Id}");
@@ -58,7 +84,7 @@ namespace TourPlanner.DataAccess.Repository
             // Ensure the entity has a permanent ID
             if (tour.Id <= 0)
             {
-                throw new InvalidOperationException("The tour entity has a temporary ID. Ensure the entity has a permanent ID before attempting to delete.");
+                throw new InvalidOperationException("The tour entity has wrong ID for deletion.");
             }
 
             // Retrieve the tour from the database to ensure it is tracked by the context
