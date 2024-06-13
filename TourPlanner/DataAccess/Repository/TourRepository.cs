@@ -75,7 +75,7 @@ namespace TourPlanner.DataAccess.Repository
             {
                 throw new ArgumentNullException(nameof(tour), "Tour entity cannot be null.");
             }
-            Debug.WriteLine(tour.ToString);
+            //Debug.WriteLine(tour.ToString);
 
             // Log the ID and state of the Tour entity before attempting to delete
             Debug.WriteLine($"Attempting to remove tour with ID: {tour.Id}");
@@ -84,7 +84,7 @@ namespace TourPlanner.DataAccess.Repository
             // Ensure the entity has a permanent ID
             if (tour.Id <= 0)
             {
-                throw new InvalidOperationException("The tour entity has a temporary ID. Ensure the entity has a permanent ID before attempting to delete.");
+                throw new InvalidOperationException("The tour entity has wrong ID for deletion.");
             }
 
             // Retrieve the tour from the database to ensure it is tracked by the context
