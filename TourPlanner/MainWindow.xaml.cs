@@ -3,6 +3,8 @@ using System.Windows.Controls;
 using TourPlanner.BusinessLogic.Models;
 using System.Windows.Media;
 using TourPlanner.ViewModels;
+using TourPlanner.Views;
+using System.Windows.Input;
 
 
 
@@ -58,7 +60,7 @@ namespace TourPlanner
             }
         }
 
-
+       
 
 
     }

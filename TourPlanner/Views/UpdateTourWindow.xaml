@@ -51,24 +51,8 @@
             </ComboBox>
         </StackPanel>
 
-        <!-- Distance -->
-        <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="0 0 0 10">
-            <Label Content="Distance:" Width="100"/>
-            <TextBox Text="{Binding Distance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="5"/>
-        </StackPanel>
-
-        <!-- Estimated Time -->
-        <StackPanel Grid.Row="6" Orientation="Horizontal" Margin="0 0 0 10">
-            <Label Content="Estimated Time:" Width="100"/>
-            <TextBox Text="{Binding EstimatedTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="5"/>
-        </StackPanel>
-
-        <!-- Tour Image -->
-        <StackPanel Grid.Row="7" Orientation="Horizontal" Margin="0 0 0 10">
-            <Label Content="Tour Image:" Width="100"/>
-            <TextBox Text="{Binding TourImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="5"/>
-        </StackPanel>
-
+      
+      
         <!-- Update Button -->
         <Button Content="Update" Click="Update_Click" Grid.Row="7" HorizontalAlignment="Center" Margin="0,35,0,-27" RenderTransformOrigin="0.573,2.277"/>
     </Grid>

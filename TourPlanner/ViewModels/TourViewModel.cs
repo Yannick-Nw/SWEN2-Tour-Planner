@@ -78,6 +78,8 @@ namespace TourPlanner.ViewModels
         public ICommand SearchCommand { get; }
         public ICommand ExportCommand { get; }
         public ICommand ImportCommand { get; }
+        public ICommand OpenMapCommand { get; }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -96,31 +98,8 @@ namespace TourPlanner.ViewModels
             SearchCommand = new RelayCommand(obj => Search());
             ExportCommand = new RelayCommand(obj => ExportTours(), obj => SelectedTour != null);
             ImportCommand = new RelayCommand(obj => ImportTours());
-            /*
-            // Example tours for testing
-            Tours = new ObservableCollection<Tour>();
-     
-            List<Tour> dbtours = connection.GetAllTours();
-            foreach (Tour tour in dbtours)
-            {
-                Tours.Add(new Tour
-                {
-                    Id = tour.Id,
-                    Name = tour.Name,
-                    Description = tour.Description,
-                    From = tour.From,
-                    To = tour.To,
-                    TransportType = tour.TransportType,
-                    Distance = tour.Distance,
-                    EstimatedTime = tour.EstimatedTime,
-                    TourImage = tour.TourImage,
-                    Popularity = tour.Popularity,
-                    TourLogs = tour.TourLogs // Assuming deep copy or reference is acceptable here
-                });
-            }
-            */
 
-
+            OpenMapCommand = new RelayCommand(obj => OpenMap());
             // Load tours from database
             Tours = new ObservableCollection<Tour>(connection.GetAllTours());
 
@@ -220,6 +199,16 @@ namespace TourPlanner.ViewModels
                 {
                     Tours.Add(tour);
                 }
+            }
+        }
+
+        private void OpenMap()
+        {
+            if (SelectedTour != null)
+            {
+                MapWindow mapWindow = new MapWindow();
+                mapWindow.DataContext = this; // Set DataContext to this ViewModel
+                mapWindow.Show();
             }
         }
 

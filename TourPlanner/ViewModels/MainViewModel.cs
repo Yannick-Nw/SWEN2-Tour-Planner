@@ -1,16 +1,20 @@
-﻿using TourPlanner.BusinessLogic.Services;
+﻿using System.Windows.Input;
+using TourPlanner.BusinessLogic.Services;
 using TourPlanner.ViewModels.Abstract;
+using TourPlanner.Views;
 
 namespace TourPlanner.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
+        public ICommand OpenMapCommand { get; private set; }
         private TourViewModel _tourViewModel;
         private TourLogViewModel _tourLogViewModel;
         private ReportViewModel _reportViewModel;
 
         public MainViewModel()
         {
+           
             TourService tourService = new TourService(); // Create an instance of TourService
             _tourViewModel = new TourViewModel(tourService); // Pass tourService to TourViewModel constructor
             _tourLogViewModel = new TourLogViewModel { SelectedTour = _tourViewModel.SelectedTour };
@@ -33,7 +37,7 @@ namespace TourPlanner.ViewModels
                 }
             };
         }
-
+     
         public TourViewModel TourViewModel
         {
             get { return _tourViewModel; }

@@ -67,7 +67,7 @@
                 </Button>
             </Grid>
         </Grid>
-    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,20,0,5" HorizontalAlignment="Left">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,20,0,5" HorizontalAlignment="Left">
             <Button Content="+" Command="{Binding TourViewModel.AddCommand}" Margin="5" Width="30">
                 <Button.Style>
                     <Style TargetType="Button">
@@ -108,7 +108,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-           
+
         </StackPanel>
 
         <Border Grid.Row="2" BorderBrush="Black" BorderThickness="1" Width="200" Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,0,0,0">
@@ -154,11 +154,25 @@
 
         <!-- Tabs and Map Section -->
         <TabControl Grid.Row="1" Margin="205,40,0,167" Grid.RowSpan="2">
-
-            <TabItem Header="Route">
-                <!-- Map Display -->
-
-            </TabItem>
+                <TabItem Header="Route">  
+        <Grid>
+            <Button Content="Open Map" Command="{Binding TourViewModel.OpenMapCommand}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#007ACC"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Padding" Value="10,5"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#3399FF"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
+    </TabItem>
             <TabItem Header="General">
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <TextBlock Text="Popularity:" FontWeight="Bold" Margin="0,0,5,0"/>

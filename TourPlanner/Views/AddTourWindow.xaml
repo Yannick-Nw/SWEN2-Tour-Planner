@@ -51,19 +51,6 @@
             </ComboBox>
         </StackPanel>
 
-
-        <!-- Distance -->
-        <StackPanel Grid.Row="5" Orientation="Horizontal">
-            <Label Content="Distance:" Width="100"/>
-            <TextBox Text="{Binding Distance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="5"/>
-        </StackPanel>
-
-        <!-- Tour Image -->
-        <StackPanel Grid.Row="6" Orientation="Horizontal">
-            <Label Content="Tour Image:" Width="100"/>
-            <TextBox Text="{Binding TourImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="5"/>
-        </StackPanel>
-
         <!-- Add Button -->
         <Button Content="Add" Click="Add_Click" Grid.Row="8" HorizontalAlignment="Center" Margin="5"/>
     </Grid>

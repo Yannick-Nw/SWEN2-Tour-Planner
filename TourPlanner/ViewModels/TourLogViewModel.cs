@@ -83,7 +83,7 @@ namespace TourPlanner.ViewModels
         {
             if (SelectedTourLog != null)
             {
-                var updateTourLogWindow = new UpdateTourLogWindow(SelectedTourLog.Clone() as TourLog); // Pass a clone of the selected tour log
+                var updateTourLogWindow = new UpdateTourLogWindow(SelectedTourLog); 
                 if (updateTourLogWindow.ShowDialog() == true)
                 {
                     _tourLogService.UpdateTourLog(SelectedTour, SelectedTourLog, updateTourLogWindow.UpdatedTourLog);
