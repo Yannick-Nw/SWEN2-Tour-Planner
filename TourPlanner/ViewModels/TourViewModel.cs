@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
-
 using log4net;
 using System.Collections.Generic;
 using TourPlanner.Views;
@@ -32,8 +31,21 @@ namespace TourPlanner.ViewModels
             {
                 _tours = value;
                 OnPropertyChanged(nameof(Tours));
+                
             }
         }
+
+        private ObservableCollection<Tour> _recommendedTours;
+        public ObservableCollection<Tour> RecommendedTours
+        {
+            get { return _recommendedTours; }
+            set
+            {
+                _recommendedTours = value;
+                OnPropertyChanged(nameof(RecommendedTours));
+            }
+        }
+
 
         private ObservableCollection<Tour> _filteredTours;
         public ObservableCollection<Tour> FilteredTours
@@ -45,7 +57,7 @@ namespace TourPlanner.ViewModels
                 OnPropertyChanged(nameof(FilteredTours));
             }
         }
-
+    
         private Tour _selectedTour;
         public Tour SelectedTour
         {
@@ -105,10 +117,13 @@ namespace TourPlanner.ViewModels
 
             // Initialize FilteredTours with all tours
             FilteredTours = Tours;
-           
+
+
+
+
         }
 
-
+      
         private void AddTour()
         {
             var addTourWindow = new AddTourWindow();

@@ -182,6 +182,26 @@
 
                 </StackPanel>
             </TabItem>
+            <TabItem Header="Recommendation">
+                <StackPanel>
+                    <TextBlock Text="Top tours:" FontWeight="Bold" Margin="0,0,5,0"/>
+                    <ItemsControl ItemsSource="{Binding RecommendedTours}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical" Margin="2">
+                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                                    <!-- Add other properties as needed -->
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </TabItem>
+
+
+
+
+
 
         </TabControl>
 

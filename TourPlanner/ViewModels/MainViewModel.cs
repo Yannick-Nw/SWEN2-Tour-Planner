@@ -1,17 +1,33 @@
-﻿using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Input;
+using TourPlanner.BusinessLogic.Models;
 using TourPlanner.BusinessLogic.Services;
 using TourPlanner.ViewModels.Abstract;
+
 using TourPlanner.Views;
 
 namespace TourPlanner.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
+
+        private ObservableCollection<Tour> _recommendedTours;
+        public ObservableCollection<Tour> RecommendedTours
+        {
+            get { return _recommendedTours; }
+            set
+            {
+                _recommendedTours = value;
+                OnPropertyChanged(nameof(RecommendedTours));
+            }
+        }
+
         public ICommand OpenMapCommand { get; private set; }
         private TourViewModel _tourViewModel;
         private TourLogViewModel _tourLogViewModel;
         private ReportViewModel _reportViewModel;
-
+        
         public MainViewModel()
         {
            
@@ -35,9 +51,20 @@ namespace TourPlanner.ViewModels
                 {
                     _reportViewModel.Tours = _tourViewModel.Tours;
                 }
+                // Update recommended tours when Tours collection changes
+                UpdateRecommendedTours();
             };
+            // Initialize recommended tours
+            UpdateRecommendedTours();
         }
-     
+        private void UpdateRecommendedTours()
+        {
+            // Order tours by popularity and take top 3
+            var topTours = _tourViewModel.Tours.OrderByDescending(t => t.Popularity).Take(3);
+
+            // Assign to RecommendedTours property
+            RecommendedTours = new ObservableCollection<Tour>(topTours);
+        }
         public TourViewModel TourViewModel
         {
             get { return _tourViewModel; }
@@ -69,3 +96,28 @@ namespace TourPlanner.ViewModels
         }
     }
 }
+
+
+
+/*
+public MainViewModel()
+{
+    TourService tourService = new TourService();
+    _tourViewModel = new TourViewModel(tourService);
+    _tourLogViewModel = new TourLogViewModel(); // No need to set SelectedTour here
+    _reportViewModel = new ReportViewModel(); // No need to set SelectedTour and Tours here
+
+    _tourViewModel.PropertyChanged += (sender, args) =>
+    {
+        if (args.PropertyName == nameof(_tourViewModel.SelectedTour))
+        {
+            _tourLogViewModel.SelectedTour = _tourViewModel.SelectedTour;
+            _reportViewModel.SelectedTour = _tourViewModel.SelectedTour;
+        }
+        else if (args.PropertyName == nameof(_tourViewModel.Tours))
+        {
+            _reportViewModel.Tours = _tourViewModel.Tours;
+        }
+    };
+}
+*/
