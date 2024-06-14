@@ -6,6 +6,12 @@ using TourPlanner.Views;
 using TourPlanner.BusinessLogic.Models;
 using TourPlanner.BusinessLogic.Services;
 using TourPlanner.ViewModels.Abstract;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using TourPlanner.DataAccess.Repository;
+using TourPlanner.DataAccess;
+using System.Collections.Generic;
+using System.Windows.Media;
+using System;
 
 namespace TourPlanner.ViewModels
 {
@@ -41,6 +47,8 @@ namespace TourPlanner.ViewModels
             }
         }
 
+        private TourLogRepository connection { get; set; }
+
         public ICommand AddTourLogCommand { get; }
         public ICommand UpdateTourLogCommand { get; }
         public ICommand DeleteTourLogCommand { get; }
@@ -51,10 +59,33 @@ namespace TourPlanner.ViewModels
         {
             _tourLogService = new TourLogService();
 
+            TourPlannerContext context = new TourPlannerContext();
+            connection = new TourLogRepository(context);
+
             // Initialize commands
             AddTourLogCommand = new RelayCommand(obj => AddTourLog(), obj => SelectedTour != null);
             UpdateTourLogCommand = new RelayCommand(obj => UpdateTourLog(), obj => SelectedTourLog != null);
             DeleteTourLogCommand = new RelayCommand(obj => DeleteTourLog(), obj => SelectedTourLog != null);
+
+            // Example tours for testing
+            TourLogs = new ObservableCollection<TourLog>();
+            TourLogs.Add(new TourLog { Comment = "Comment for TourLog 1" });
+            TourLogs.Add(new TourLog { Comment = "Comment for TourLog 2" });
+
+            List<TourLog> dbtourlogs = connection.GetAllTourLogs();
+            foreach (TourLog tourlog in dbtourlogs)
+            {
+                TourLogs.Add(new TourLog
+                {
+                    DateTime = tourlog.DateTime,
+                    Comment = tourlog.Comment,
+                    Difficulty = tourlog.Difficulty,
+                    TotalDistance = tourlog.TotalDistance,
+                    TotalTime = tourlog.TotalTime,
+                    Rating = tourlog.Rating
+                });
+            }
+
             UpdateTourPopularity();
         }
 
