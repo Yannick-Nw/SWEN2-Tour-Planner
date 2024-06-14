@@ -144,6 +144,21 @@ namespace TourPlanner.UI.ViewModels
             {
                 var newTourLog = addTourLogWindow.NewTourLog;
                 _tourLogService.AddTourLog(SelectedTour, newTourLog);
+
+                connection.AddTourLogAsync(SelectedTour, newTourLog).ContinueWith(task =>
+                {
+                    if (task.Exception != null)
+                    {
+                        // Iterate through all AggregateExceptions
+                        foreach (var ex in task.Exception.InnerExceptions)
+                        {
+                            logger.Error("An error occurred while adding the tourlog: " + ex.Message);
+                            // Here we could also add user notification
+                        }
+                        throw new InvalidOperationException("An error occurred while adding the tourlog.");
+                    }
+                });
+                
                 logger.Info($"TourLog added to Tour: {SelectedTour.Name}");
 
                 // Ensure SelectedTour.TourLogs is updated and add the new log to the TourLogs collection only once
@@ -173,6 +188,9 @@ namespace TourPlanner.UI.ViewModels
                 {
                     var updatedTourLog = updateTourLogWindow.UpdatedTourLog;
                     _tourLogService.UpdateTourLog(SelectedTour, SelectedTourLog, updatedTourLog);
+                    //connection.UpdateTourLogAsync(SelectedTour, SelectedTourLog, updatedTourLog);
+                    connection.UpdateTourLogAsync(updatedTourLog);
+
                     logger.Info($"TourLog updated in Tour: {SelectedTour.Name}");
 
                     // Update the TourLogs collection and SelectedTour.TourLogs only once
@@ -200,6 +218,7 @@ namespace TourPlanner.UI.ViewModels
             if (SelectedTourLog != null && SelectedTour != null && SelectedTour.TourLogs.Contains(SelectedTourLog))
             {
                 _tourLogService.DeleteTourLog(SelectedTour, SelectedTourLog);
+                connection.RemoveTourLogAsync(SelectedTourLog);
                 logger.Info($"TourLog deleted from Tour: {SelectedTour.Name}");
                 SelectedTour.TourLogs.Remove(SelectedTourLog);
                 TourLogs.Remove(SelectedTourLog);

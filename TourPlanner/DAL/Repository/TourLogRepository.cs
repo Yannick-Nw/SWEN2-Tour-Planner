@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TourPlanner.BusinessLogic.Models;
+using Windows.UI;
 
 namespace TourPlanner.DAL.Repository
 {
@@ -16,10 +17,16 @@ namespace TourPlanner.DAL.Repository
             this.context = context;
         }
 
-        public async Task AddTourLogAsync(TourLog tourlog)
+        public async Task AddTourLogAsync(Tour selectedTour, TourLog tourlog)
         {
-            await context.TourLogs.AddAsync(tourlog);
-            await context.SaveChangesAsync();
+            var tour = context.Tours.Include(t => t.TourLogs).FirstOrDefault(t => t.Id == selectedTour.Id);
+            if (tour == null)
+            {
+                throw new InvalidOperationException("Tour not found");
+            }
+
+            tour.TourLogs.Add(tourlog);
+            context.SaveChanges();
         }
 
         public List<TourLog> GetAllTourLogs()
@@ -31,9 +38,9 @@ namespace TourPlanner.DAL.Repository
         {
             return await context.TourLogs.FindAsync(id);
         }
-        public async Task UpdateTourLogAsync(TourLog tourlog)
+        public async Task UpdateTourLogAsync(TourLog updatedTourLog)
         {
-            context.TourLogs.Update(tourlog);
+            context.TourLogs.Update(updatedTourLog);
             await context.SaveChangesAsync();
         }
 
