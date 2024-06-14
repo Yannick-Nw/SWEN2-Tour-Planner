@@ -3,7 +3,7 @@ using Moq;
 using System.Collections.ObjectModel;
 using TourPlanner.BusinessLogic.Models;
 using TourPlanner.BusinessLogic.Services;
-using TourPlanner.ViewModels;
+using TourPlanner.UI.ViewModels;
 
 namespace TourPlannerTest
 {

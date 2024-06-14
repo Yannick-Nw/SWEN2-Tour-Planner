@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:TourPlanner.ViewModels"
-        xmlns:views="clr-namespace:TourPlanner.Views"
+        xmlns:vm="clr-namespace:TourPlanner.UI.ViewModels"
+        xmlns:views="clr-namespace:TourPlanner.UI.Views"
         mc:Ignorable="d"
         Title="Tour Planner"
         Height="450"
@@ -67,7 +67,7 @@
                 </Button>
             </Grid>
         </Grid>
-    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,20,0,5" HorizontalAlignment="Left">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,20,0,5" HorizontalAlignment="Left">
             <Button Content="+" Command="{Binding TourViewModel.AddCommand}" Margin="5" Width="30">
                 <Button.Style>
                     <Style TargetType="Button">
@@ -108,7 +108,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-           
+
         </StackPanel>
 
         <Border Grid.Row="2" BorderBrush="Black" BorderThickness="1" Width="200" Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,0,0,0">
@@ -150,14 +150,26 @@
             </ListBox>
         </Border>
 
-
-
         <!-- Tabs and Map Section -->
         <TabControl Grid.Row="1" Margin="205,40,0,167" Grid.RowSpan="2">
-
             <TabItem Header="Route">
-                <!-- Map Display -->
-
+                <Grid>
+                    <Button Content="Open Map" Command="{Binding TourViewModel.OpenMapCommand}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#007ACC"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Padding" Value="10,5"/>
+                                <Setter Property="BorderThickness" Value="1"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#3399FF"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </Grid>
             </TabItem>
             <TabItem Header="General">
                 <StackPanel Orientation="Horizontal" Margin="5">
@@ -168,11 +180,24 @@
 
                 </StackPanel>
             </TabItem>
+            <TabItem Header="Top Tours">
+                <StackPanel>
+                    <ItemsControl ItemsSource="{Binding RecommendedTours}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical" Margin="4">
+                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" />
 
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </TabItem>
         </TabControl>
 
-
         <StackPanel Grid.Row="2"  Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBox Grid.Column="0" Text="{Binding TourLogViewModel.SearchText, UpdateSourceTrigger=PropertyChanged}" Padding="5" Width ="200" Height="36" RenderTransformOrigin="0.5,1.602"/>
             <Button Content="+" Command="{Binding TourLogViewModel.AddTourLogCommand}" Margin="5" Width="30" Height="30">
                 <Button.Style>
                     <Style TargetType="Button">
@@ -204,8 +229,9 @@
                 </Button.Style>
             </Button>
         </StackPanel>
+      
 
-        <ListView x:Name="tourLogListView" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Width="Auto" Height="Auto" ItemsSource="{Binding TourLogViewModel.SelectedTour.TourLogs}" SelectedItem="{Binding TourLogViewModel.SelectedTourLog}" Margin="205,180,0,0" SelectionChanged="ListView_SelectionChanged">
+        <ListView x:Name="tourLogListView" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Width="Auto" Height="Auto" ItemsSource="{Binding TourLogViewModel.FilteredTourLogs}" SelectedItem="{Binding TourLogViewModel.SelectedTourLog}" Margin="205,180,0,0" SelectionChanged="ListView_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=DateTime}" Header="Date" />
@@ -217,5 +243,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
+
     </Grid>
 </Window>
