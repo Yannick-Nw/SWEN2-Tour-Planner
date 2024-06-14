@@ -35,13 +35,30 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="log4net.config">
+		<None Update="Configurations\log4net.config">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Properties\Settings.settings">
+		  <Generator>SettingsSingleFileGenerator</Generator>
+		  <LastGenOutput>Settings.Designer.cs</LastGenOutput>
 		</None>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="BusinessLogic\Map\Images\" />
-	  <Folder Include="DataAccess\Repository\Interface\" />
+	  <Folder Include="DAL\Repository\Interface\" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Page Include="App.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Properties\Settings.Designer.cs">
+	    <DesignTimeSharedInput>True</DesignTimeSharedInput>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Settings.settings</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
 </Project>

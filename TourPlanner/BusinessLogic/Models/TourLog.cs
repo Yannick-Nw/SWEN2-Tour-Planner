@@ -11,7 +11,7 @@ namespace TourPlanner.BusinessLogic.Models
         Hard
     }
 
-    public class TourLog : ICloneable
+    public class TourLog 
     {
         [Key]
         public int Id { get; private set; }
@@ -23,18 +23,6 @@ namespace TourPlanner.BusinessLogic.Models
         public TimeSpan TotalTime { get; set; }
         public int Rating { get; set; }
 
-
-        public object Clone()
-        {
-            return new TourLog
-            {
-                DateTime = DateTime,
-                Comment = Comment,
-                Difficulty = Difficulty,
-                TotalDistance = TotalDistance,
-                TotalTime = TotalTime,
-                Rating = Rating
-            };
-        }
+    
     }
 }

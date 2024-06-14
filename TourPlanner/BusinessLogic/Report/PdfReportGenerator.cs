@@ -44,14 +44,14 @@ namespace TourPlanner.BusinessLogic.Report
                             column.Item().Text($"Estimated Time: {tour.EstimatedTime}");
                             column.Item().Text($"Popularity: {tour.Popularity}");
                             column.Item().Text($"Child Friendliness: {tour.ChildFriendliness}");
-
+                           
                             if (!string.IsNullOrEmpty(tour.TourImage))
                             {
-
-                                column.Item().Image(tour.TourImage);
+                                // Example: Adjusting image size with FitWidth()
+                                column.Item().Image(tour.TourImage)
+                                       .FitArea(); // Adjusts image to fit the width of its container
 
                             }
-
                             column.Item().Text("Tour Logs:").FontSize(16).SemiBold().FontColor(Colors.Red.Darken1);
 
                             foreach (var log in tour.TourLogs)
