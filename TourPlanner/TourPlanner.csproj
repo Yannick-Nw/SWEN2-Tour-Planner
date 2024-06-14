@@ -46,7 +46,6 @@
 
 	<ItemGroup>
 	  <Folder Include="BusinessLogic\Map\Images\" />
-	  <Folder Include="DAL\Repository\Interface\" />
 	</ItemGroup>
 
 	<ItemGroup>
