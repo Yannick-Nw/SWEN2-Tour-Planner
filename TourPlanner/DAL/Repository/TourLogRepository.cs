@@ -22,9 +22,9 @@ namespace TourPlanner.DAL.Repository
             await context.SaveChangesAsync();
         }
 
-        public async Task<List<TourLog>> GetAllTourLogsAsync()
+        public List<TourLog> GetAllTourLogs()
         {
-            return await context.TourLogs.ToListAsync();
+            return context.TourLogs.ToList();
         }
 
         public async Task<TourLog> GetTourLogsByIdAsync(int id)
