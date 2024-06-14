@@ -109,6 +109,7 @@ namespace TourPlanner.UI.ViewModels
             TourLogs.Clear();
             if (SelectedTour?.TourLogs != null)
             {
+                SelectedTour.TourLogs = connection.GetTourLogsByTourId(SelectedTour.Id);
                 foreach (var log in SelectedTour.TourLogs)
                 {
                     TourLogs.Add(log);
@@ -143,7 +144,7 @@ namespace TourPlanner.UI.ViewModels
             if (addTourLogWindow.ShowDialog() == true)
             {
                 var newTourLog = addTourLogWindow.NewTourLog;
-                _tourLogService.AddTourLog(SelectedTour, newTourLog);
+                //_tourLogService.AddTourLog(SelectedTour, newTourLog);
 
                 connection.AddTourLogAsync(SelectedTour, newTourLog).ContinueWith(task =>
                 {

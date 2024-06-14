@@ -34,6 +34,19 @@ namespace TourPlanner.DAL.Repository
             return context.TourLogs.ToList();
         }
 
+        public List<TourLog> GetTourLogsByTourId(int tourId)
+        {
+            // Query the database for the Tour with its related TourLogs
+            var tour = context.Tours.Include(t => t.TourLogs).FirstOrDefault(t => t.Id == tourId);
+            if (tour == null)
+            {
+                throw new InvalidOperationException("Tour not found");
+            }
+
+            return tour.TourLogs;
+        }
+
+
         public async Task<TourLog> GetTourLogsByIdAsync(int id)
         {
             return await context.TourLogs.FindAsync(id);
