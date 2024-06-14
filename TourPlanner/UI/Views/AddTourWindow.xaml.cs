@@ -1,8 +1,6 @@
 using System.Windows;
 using TourPlanner.BusinessLogic.Models;
 
-
-
 namespace TourPlanner.Views
 {
     public partial class AddTourWindow : Window

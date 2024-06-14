@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace TourPlanner.logging
+namespace TourPlanner.BusinessLogic.logging
 {
     public static class LoggerFactory
     {

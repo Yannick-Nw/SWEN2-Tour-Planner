@@ -66,9 +66,6 @@ namespace TourPlanner.DataAccess.Repository
             context.SaveChanges();
         }
 
-
-
-
         public void RemoveTour(Tour tour)
         {
             if (tour == null)
@@ -102,7 +99,5 @@ namespace TourPlanner.DataAccess.Repository
                 throw new InvalidOperationException($"The tour entity with ID {tour.Id} was not found in the database.");
             }
         }
-
-
     }
 }

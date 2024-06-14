@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace TourPlanner.logging
+namespace TourPlanner.BusinessLogic.logging
 {
     /// <summary>
     /// Wraps the log4j2 logger instances by realizing interface ILoggerWrapper.
@@ -30,21 +30,21 @@ namespace TourPlanner.logging
 
         public void Debug(string message)
         {
-            this.logger.Debug(message);
+            logger.Debug(message);
         }
         public void Warn(string message)
         {
-            this.logger.Warn(message);
+            logger.Warn(message);
         }
 
         public void Error(string message)
         {
-            this.logger.Error(message);
+            logger.Error(message);
         }
 
         public void Fatal(string message)
         {
-            this.logger.Fatal(message);
+            logger.Fatal(message);
         }
     }
 }

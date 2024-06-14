@@ -35,7 +35,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="log4net.config">
+		<None Update="Configurations\log4net.config">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="Properties\Settings.settings">
@@ -46,7 +46,11 @@
 
 	<ItemGroup>
 	  <Folder Include="BusinessLogic\Map\Images\" />
-	  <Folder Include="DataAccess\Repository\Interface\" />
+	  <Folder Include="DAL\Repository\Interface\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Page Include="App.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>
