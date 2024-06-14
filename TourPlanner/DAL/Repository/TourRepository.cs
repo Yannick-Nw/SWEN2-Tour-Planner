@@ -49,13 +49,8 @@ namespace TourPlanner.DAL.Repository
             {
                 throw new ArgumentNullException(nameof(tour), "Tour entity cannot be null.");
             }
-            //Debug.WriteLine(tour.ToString);
 
-            // Log the ID and state of the Tour entity before attempting to delete
-            Debug.WriteLine($"Attempting to remove tour with ID: {tour.Id}");
-            Debug.WriteLine($"Tour state before deletion: {context.Entry(tour).State}");
-
-            // Ensure the entity has a permanent ID
+            // Ensure the entity has a correct ID
             if (tour.Id <= 0)
             {
                 throw new InvalidOperationException("The tour entity has wrong ID for deletion.");
