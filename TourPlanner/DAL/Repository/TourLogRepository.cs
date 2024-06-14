@@ -8,7 +8,7 @@ using TourPlanner.BusinessLogic.Models;
 
 namespace TourPlanner.DAL.Repository
 {
-    internal class TourLogRepository
+    public class TourLogRepository
     {
         private readonly TourPlannerContext context;
         public TourLogRepository(TourPlannerContext context)

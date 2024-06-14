@@ -11,7 +11,7 @@ using System.Diagnostics;
 
 namespace TourPlanner.DAL.Repository
 {
-    internal class TourRepository
+    public class TourRepository
     {
         private readonly TourPlannerContext context;
         public TourRepository(TourPlannerContext context)

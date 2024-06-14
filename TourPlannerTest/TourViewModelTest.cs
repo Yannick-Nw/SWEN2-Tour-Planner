@@ -3,12 +3,12 @@ using Moq;
 using System.Collections.ObjectModel;
 using TourPlanner.BusinessLogic.Models;
 using TourPlanner.BusinessLogic.Services;
-using TourPlanner.ViewModels;
+using TourPlanner.UI.ViewModels;
 
 namespace TourPlannerTest
 {
     [TestFixture]
-    public class TourViewModelTests
+    public class TourViewModelTest
     {
         [Test]
         public void AddTourCommand_CanExecute_ReturnsTrue()

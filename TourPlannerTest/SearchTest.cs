@@ -2,9 +2,9 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using TourPlanner.BusinessLogic.Models;
-using TourPlanner.ViewModels;
+using TourPlanner.UI.ViewModels;
 
-namespace TourPlanner.Tests
+namespace TourPlannerTest
 {
     [TestFixture]
     public class TourViewModelTests
