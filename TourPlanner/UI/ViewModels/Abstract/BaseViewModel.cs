@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace TourPlanner.ViewModels.Abstract
+namespace TourPlanner.UI.ViewModels.Abstract
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {

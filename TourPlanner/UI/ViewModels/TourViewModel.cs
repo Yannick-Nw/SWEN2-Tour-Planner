@@ -5,15 +5,15 @@ using System.Linq;
 using System.Windows.Input;
 using log4net;
 using System.Collections.Generic;
-using TourPlanner.Views;
+using TourPlanner.UI.Views;
 using Microsoft.Win32;
 using TourPlanner.BusinessLogic.Models;
 using TourPlanner.BusinessLogic.Services;
-using TourPlanner.ViewModels.Abstract;
-using TourPlanner.DataAccess;
-using TourPlanner.DataAccess.Repository;
+using TourPlanner.UI.ViewModels.Abstract;
+using TourPlanner.DAL;
+using TourPlanner.DAL.Repository;
 
-namespace TourPlanner.ViewModels
+namespace TourPlanner.UI.ViewModels
 {
     public class TourViewModel : BaseViewModel, INotifyPropertyChanged
     {
@@ -176,28 +176,7 @@ namespace TourPlanner.ViewModels
                 _tourService.ExportToursToJson(new List<Tour> { SelectedTour }, dialog.FileName);
             }
         }
-        /*
-        private void ImportTours()
-        {
-            logger.Info("Importing tours.");
-            var dialog = new OpenFileDialog
-            {
-                Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
-                Title = "Import Tour Data"
-            };
-
-            if (dialog.ShowDialog() == true)
-            {
-                List<Tour> importedTours = _tourService.ImportToursFromJson(dialog.FileName);
-                foreach (Tour tour in importedTours)
-                {
-                    Tours.Add(tour);
-                }
-            }
-        }
-        */
-
-
+  
         private void ImportTours()
         {
             var dialog = new OpenFileDialog

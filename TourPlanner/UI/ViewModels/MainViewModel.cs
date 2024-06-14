@@ -4,9 +4,9 @@ using System.Linq;
 using System.Windows.Input;
 using TourPlanner.BusinessLogic.Models;
 using TourPlanner.BusinessLogic.Services;
-using TourPlanner.ViewModels.Abstract;
+using TourPlanner.UI.ViewModels.Abstract;
 
-namespace TourPlanner.ViewModels
+namespace TourPlanner.UI.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {

@@ -1,7 +1,7 @@
-﻿<Window x:Class="TourPlanner.Views.UpdateTourWindow"
+﻿<Window x:Class="TourPlanner.UI.Views.UpdateTourWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:TourPlanner.Views"
+        xmlns:local="clr-namespace:TourPlanner.UI.Views"
          xmlns:models="clr-namespace:TourPlanner.BusinessLogic.Models"
         Title="Update Tour" Height="500" Width="400">
     <Grid Margin="10">

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TourPlanner.BusinessLogic.Models;
 
-namespace TourPlanner.DataAccess.Repository
+namespace TourPlanner.DAL.Repository
 {
     internal class TourLogRepository
     {

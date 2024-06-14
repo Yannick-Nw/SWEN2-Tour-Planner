@@ -9,7 +9,7 @@ using TourPlanner.BusinessLogic.Map;
 using System.Diagnostics;
 //using Windows.Services.Maps;
 
-namespace TourPlanner.DataAccess.Repository
+namespace TourPlanner.DAL.Repository
 {
     internal class TourRepository
     {

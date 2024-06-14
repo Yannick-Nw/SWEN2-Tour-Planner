@@ -2,9 +2,9 @@
 using System.Linq;
 using TourPlanner.BusinessLogic.Models;
 using TourPlanner.BusinessLogic.Report;
-using TourPlanner.ViewModels.Abstract;
+using TourPlanner.UI.ViewModels.Abstract;
 
-namespace TourPlanner.ViewModels
+namespace TourPlanner.UI.ViewModels
 {
     public class ReportViewModel : BaseViewModel
     {

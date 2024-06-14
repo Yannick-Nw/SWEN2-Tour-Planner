@@ -2,7 +2,7 @@
 using System.Windows;
 using TourPlanner.BusinessLogic.Models;
 
-namespace TourPlanner.Views
+namespace TourPlanner.UI.Views
 {
     public partial class AddTourLogWindow : Window
     {

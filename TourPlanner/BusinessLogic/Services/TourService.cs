@@ -36,21 +36,6 @@ namespace TourPlanner.BusinessLogic.Services
         {
             _tourExporter.ExportToursToJson(selectedTours, filePath);
         }
-        /*
-        public List<Tour> ImportToursFromJson(string filePath)
-        {
-            try
-            {
-                string jsonData = File.ReadAllText(filePath);
-                List<Tour> importedTours = JsonConvert.DeserializeObject<List<Tour>>(jsonData);
-                return importedTours;
-            }
-            catch
-            {
-                return new List<Tour>();
-            }
-        }
-        */
 
         public List<Tour> ImportToursFromJson(string filePath)
         {

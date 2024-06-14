@@ -4,7 +4,7 @@ using System.Configuration;
 using log4net;
 using TourPlanner.BusinessLogic.Models;
 
-namespace TourPlanner.DataAccess
+namespace TourPlanner.DAL
 {
     public class TourPlannerContext : DbContext
     {

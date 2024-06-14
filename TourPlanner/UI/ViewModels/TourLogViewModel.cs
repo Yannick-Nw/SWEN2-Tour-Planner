@@ -3,13 +3,13 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using log4net;
-using TourPlanner.Views;
+using TourPlanner.UI.Views;
 using TourPlanner.BusinessLogic.Models;
 using TourPlanner.BusinessLogic.Services;
-using TourPlanner.ViewModels.Abstract;
+using TourPlanner.UI.ViewModels.Abstract;
 using System;
 
-namespace TourPlanner.ViewModels
+namespace TourPlanner.UI.ViewModels
 {
     public class TourLogViewModel : BaseViewModel, INotifyPropertyChanged
     {
