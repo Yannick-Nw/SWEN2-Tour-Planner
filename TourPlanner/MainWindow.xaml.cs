@@ -1,10 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using TourPlanner.BusinessLogic.Models;
-using System.Windows.Media;
-using TourPlanner.UI.ViewModels;
-using TourPlanner.UI.Views;
-using System.Windows.Input;
 
 
 

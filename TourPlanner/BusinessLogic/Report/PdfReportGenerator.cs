@@ -11,7 +11,7 @@ using TourPlanner.BusinessLogic.Models;
 
 namespace TourPlanner.BusinessLogic.Report
 {
-    public static class PdfReportGenerator
+    public class PdfReportGenerator
     {
         public static void GenerateTourReport(Tour tour)
         {
@@ -47,9 +47,9 @@ namespace TourPlanner.BusinessLogic.Report
                            
                             if (!string.IsNullOrEmpty(tour.TourImage))
                             {
-                                // Example: Adjusting image size with FitWidth()
+                                
                                 column.Item().Image(tour.TourImage)
-                                       .FitArea(); // Adjusts image to fit the width of its container
+                                       .FitArea();
 
                             }
                             column.Item().Text("Tour Logs:").FontSize(16).SemiBold().FontColor(Colors.Red.Darken1);

@@ -29,9 +29,12 @@ namespace TourPlanner.BusinessLogic.Services
 
         public void DeleteTour(ObservableCollection<Tour> tours, Tour selectedTour)
         {
+            if (!tours.Contains(selectedTour))
+            {
+                throw new KeyNotFoundException("The tour to delete was not found in the collection.");
+            }
             tours.Remove(selectedTour);
         }
-
         public void ExportToursToJson(List<Tour> selectedTours, string filePath)
         {
             _tourExporter.ExportToursToJson(selectedTours, filePath);
