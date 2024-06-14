@@ -1,6 +1,4 @@
 using System.Windows;
-using System;
-using TourPlanner.ViewModels;
 using TourPlanner.BusinessLogic.Models;
 
 

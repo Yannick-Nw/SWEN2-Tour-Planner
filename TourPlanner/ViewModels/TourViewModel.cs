@@ -10,10 +10,8 @@ using Microsoft.Win32;
 using TourPlanner.BusinessLogic.Models;
 using TourPlanner.BusinessLogic.Services;
 using TourPlanner.ViewModels.Abstract;
-using Windows.Networking.Connectivity;
 using TourPlanner.DataAccess;
 using TourPlanner.DataAccess.Repository;
-
 
 namespace TourPlanner.ViewModels
 {
@@ -34,18 +32,6 @@ namespace TourPlanner.ViewModels
                 
             }
         }
-
-        private ObservableCollection<Tour> _recommendedTours;
-        public ObservableCollection<Tour> RecommendedTours
-        {
-            get { return _recommendedTours; }
-            set
-            {
-                _recommendedTours = value;
-                OnPropertyChanged(nameof(RecommendedTours));
-            }
-        }
-
 
         private ObservableCollection<Tour> _filteredTours;
         public ObservableCollection<Tour> FilteredTours
@@ -86,12 +72,10 @@ namespace TourPlanner.ViewModels
         public ICommand AddCommand { get; }
         public ICommand UpdateCommand { get; }
         public ICommand DeleteCommand { get; }
-
         public ICommand SearchCommand { get; }
         public ICommand ExportCommand { get; }
         public ICommand ImportCommand { get; }
         public ICommand OpenMapCommand { get; }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -117,9 +101,6 @@ namespace TourPlanner.ViewModels
 
             // Initialize FilteredTours with all tours
             FilteredTours = Tours;
-
-
-
 
         }
 
@@ -149,8 +130,6 @@ namespace TourPlanner.ViewModels
                 _tourService.AddTour(Tours, addTourWindow.NewTour);
             }
         }
-
-
 
         private void UpdateTour()
         {
