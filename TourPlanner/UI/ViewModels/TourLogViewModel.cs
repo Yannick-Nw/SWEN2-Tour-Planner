@@ -7,6 +7,11 @@ using TourPlanner.UI.Views;
 using TourPlanner.BusinessLogic.Models;
 using TourPlanner.BusinessLogic.Services;
 using TourPlanner.UI.ViewModels.Abstract;
+//using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using TourPlanner.DAL;
+using TourPlanner.DAL.Repository;
+// using System.Collections.Generic;
+// using System.Windows.Media;
 using System;
 
 namespace TourPlanner.UI.ViewModels
@@ -73,6 +78,8 @@ namespace TourPlanner.UI.ViewModels
             }
         }
 
+        private TourLogRepository connection { get; set; }
+
         public ICommand AddTourLogCommand { get; }
         public ICommand UpdateTourLogCommand { get; }
         public ICommand DeleteTourLogCommand { get; }
@@ -84,6 +91,10 @@ namespace TourPlanner.UI.ViewModels
         {
             _tourLogService = new TourLogService();
             TourLogs = new ObservableCollection<TourLog>();
+
+            TourPlannerContext context = new TourPlannerContext();
+            connection = new TourLogRepository(context);
+
             // Initialize commands
             SearchCommand = new RelayCommand(obj => Search());
             AddTourLogCommand = new RelayCommand(obj => AddTourLog(), obj => SelectedTour != null);
