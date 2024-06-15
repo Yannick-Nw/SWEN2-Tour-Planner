@@ -1,11 +1,12 @@
-﻿using NUnit.Framework;
+﻿
+using NUnit.Framework;
 using Moq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using TourPlanner.BusinessLogic.Models;
 using TourPlanner.BusinessLogic.Services;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 
 namespace TourPlannerTest
@@ -84,6 +85,15 @@ namespace TourPlannerTest
             // Clean up
             File.Delete(filePath);
         }
+        [Test]
+        public void DeleteTour_TourNotInCollection_ThrowsException()
+        {
+            // Arrange
+            Tour tourToDelete = new Tour { Name = "Tour to Delete" };
+
+            // Act & Assert
+            Assert.Throws<KeyNotFoundException>(() => _tourService.DeleteTour(_tours, tourToDelete));
+        }
 
         [Test]
         public void ImportToursFromJson_ImportToursFromFile()
@@ -110,8 +120,45 @@ namespace TourPlannerTest
             // Clean up
             File.Delete(filePath);
         }
+        [Test]
+        public void ImportToursFromJson_ShouldReturnListOfTours()
+        {
+            // Arrange
+            var filePath = "importedTours.json";
+            var tours = new List<Tour>
+            {
+                new Tour { Name = "Imported Tour 1" },
+                new Tour { Name = "Imported Tour 2" }
+            };
+            File.WriteAllText(filePath, JsonConvert.SerializeObject(tours));
 
-       
+            // Act
+            var importedTours = _tourService.ImportToursFromJson(filePath);
+
+            // Assert
+            Assert.AreEqual(2, importedTours.Count);
+            Assert.AreEqual("Imported Tour 1", importedTours[0].Name);
+            Assert.AreEqual("Imported Tour 2", importedTours[1].Name);
+
+            // Clean up
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+        }
+
+        [Test]
+        public void ImportToursFromJson_InvalidFilePath_ReturnsEmptyList()
+        {
+            // Arrange
+            string invalidFilePath = "invalid_path.json";
+
+            // Act
+            List<Tour> importedTours = _tourService.ImportToursFromJson(invalidFilePath);
+
+            // Assert
+            Assert.IsEmpty(importedTours);
+        }
 
     }
 }

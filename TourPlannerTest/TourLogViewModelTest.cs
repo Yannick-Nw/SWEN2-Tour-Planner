@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿
+using NUnit.Framework;
 using Moq;
 using System.Collections.ObjectModel;
 using TourPlanner.BusinessLogic.Models;
