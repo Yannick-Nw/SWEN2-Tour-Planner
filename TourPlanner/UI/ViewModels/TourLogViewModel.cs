@@ -7,11 +7,8 @@ using TourPlanner.UI.Views;
 using TourPlanner.BusinessLogic.Models;
 using TourPlanner.BusinessLogic.Services;
 using TourPlanner.UI.ViewModels.Abstract;
-//using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using TourPlanner.DAL;
 using TourPlanner.DAL.Repository;
-// using System.Collections.Generic;
-// using System.Windows.Media;
 using System;
 
 namespace TourPlanner.UI.ViewModels
@@ -78,7 +75,7 @@ namespace TourPlanner.UI.ViewModels
             }
         }
 
-        private TourLogRepository connection { get; set; }
+        public TourLogRepository connection { get; set; }
 
         public ICommand AddTourLogCommand { get; }
         public ICommand UpdateTourLogCommand { get; }

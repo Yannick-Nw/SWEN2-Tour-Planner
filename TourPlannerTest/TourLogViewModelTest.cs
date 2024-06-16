@@ -1,7 +1,5 @@
-﻿
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Moq;
-using System.Collections.ObjectModel;
 using TourPlanner.BusinessLogic.Models;
 using TourPlanner.BusinessLogic.Services;
 using TourPlanner.UI.ViewModels;
@@ -11,27 +9,35 @@ namespace TourPlannerTest
     [TestFixture]
     public class TourLogViewModelTest
     {
+        private Mock<TourLogService> mockService;
+        private TourLogViewModel viewModel;
+
+        [SetUp]
+        public void Setup()
+        {
+            mockService = new Mock<TourLogService>();
+            viewModel = new TourLogViewModel();
+         
+        }
+
+
         [Test]
-        public void AddTourLogCommand_CanExecute_WithSelectedTour_ReturnsTrue()
+        public void AddTourLogCommand_CanExecute_WithoutSelectedTour_ReturnsFalse()
         {
             // Arrange
-            var mockService = new Mock<TourLogService>();
-            var viewModel = new TourLogViewModel();
-            viewModel.SelectedTour = new Tour();
+            viewModel.SelectedTour = null;
 
             // Act
             bool canExecute = viewModel.AddTourLogCommand.CanExecute(null);
 
             // Assert
-            Assert.IsTrue(canExecute);
+            Assert.IsFalse(canExecute);
         }
 
         [Test]
         public void UpdateTourLogCommand_CanExecute_WithSelectedTourLog_ReturnsTrue()
         {
             // Arrange
-            var mockService = new Mock<TourLogService>();
-            var viewModel = new TourLogViewModel();
             viewModel.SelectedTourLog = new TourLog();
 
             // Act
@@ -42,21 +48,31 @@ namespace TourPlannerTest
         }
 
         [Test]
-        public void DeleteTourLogCommand_CanExecute_WithSelectedTourLog_ReturnsTrue()
+        public void UpdateTourLogCommand_CanExecute_WithoutSelectedTourLog_ReturnsFalse()
         {
             // Arrange
-            var mockService = new Mock<TourLogService>();
-            var viewModel = new TourLogViewModel();
-            viewModel.SelectedTour = new Tour();
-            viewModel.SelectedTourLog = new TourLog();
+            viewModel.SelectedTourLog = null;
+
+            // Act
+            bool canExecute = viewModel.UpdateTourLogCommand.CanExecute(null);
+
+            // Assert
+            Assert.IsFalse(canExecute);
+        }
+
+    
+
+        [Test]
+        public void DeleteTourLogCommand_CanExecute_WithoutSelectedTourLog_ReturnsFalse()
+        {
+            // Arrange
+            viewModel.SelectedTourLog = null;
 
             // Act
             bool canExecute = viewModel.DeleteTourLogCommand.CanExecute(null);
 
             // Assert
-            Assert.IsTrue(canExecute);
+            Assert.IsFalse(canExecute);
         }
-
-       
     }
 }

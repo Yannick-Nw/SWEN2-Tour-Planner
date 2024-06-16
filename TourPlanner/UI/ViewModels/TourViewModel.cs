@@ -67,7 +67,6 @@ namespace TourPlanner.UI.ViewModels
             }
         }
 
-        //private TourPlannerContext context { get; set; }
         private TourRepository connection { get; set; }
         public ICommand AddCommand { get; }
         public ICommand UpdateCommand { get; }
@@ -121,7 +120,7 @@ namespace TourPlanner.UI.ViewModels
                         foreach (var ex in task.Exception.InnerExceptions)
                         {
                             logger.Error("An error occurred while adding the tour: " + ex.Message);
-                            // Here we could also add user notification
+                            
                         }
                         throw new InvalidOperationException("An error occurred while adding the tour.");
                     }

@@ -42,8 +42,14 @@ namespace TourPlanner.DAL.Repository
             {
                 throw new InvalidOperationException("Tour not found");
             }
+            // Ensure TourLogs collection is initialized
+            if (tour.TourLogs == null)
+            {
+                tour.TourLogs = new List<TourLog>();
+            }
 
             return tour.TourLogs;
+           
         }
 
 
