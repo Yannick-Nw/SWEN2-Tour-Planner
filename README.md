@@ -37,7 +37,7 @@ The Tour Planner application is designed to allow users to create, manage, and l
 
 
 
-## Application Architecture
+## 2.1 Application Architecture
 
 The application follows a layered architecture consisting of:
 
@@ -69,17 +69,17 @@ Handles data persistence and retrieval from PostgreSQL.
 
 Implements a repository pattern for clean data access.
 
-### 2.4. Diagrams
+### 2.2. Diagrams
 
 
 
-#### 2.4.1. Project Structure Diagram:
+#### 2.2.1. Project Structure Diagram:
 
 
 
 ![](images/image5.png)
 
-#### 2. Class Diagram:
+#### 2.2.2. Class Diagram:
 
 
 
@@ -87,7 +87,7 @@ Implements a repository pattern for clean data access.
 
 ![](images/image2.png)
 
-#### 3. Sequence diagram:
+#### 2.2.3. Sequence diagram:
 
 
 
@@ -95,7 +95,7 @@ Implements a repository pattern for clean data access.
 
 ![](images/image6.png)
 
-#### 4. Use-Case Diagram:
+#### 2.2.4. Use-Case Diagram:
 
 
 
