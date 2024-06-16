@@ -6,7 +6,7 @@ Protocol:
 - [1. Project Overview](#1-project-overview)
 - [Team Members](#team-members)
 - [2. Design and Architecture](#2-design-and-architecture)
-- [2.1 Application Architecture](#2.2.-application-architecture)
+- [2.1 Application Architecture](#2.1.-application-architecture)
 - [3. UI Flow / Wireframe](#3-ui-flow--wireframe)
 - [3.1. Main Window](#3.1.-main-window)
 - [4. Technical Decisions and Steps](#4-technical-decisions-and-steps)
