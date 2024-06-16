@@ -15,8 +15,13 @@ namespace TourPlanner.BusinessLogic.Models
     {
         [Key]
         public int Id { get; private set; }
+        private DateTime dateTime = DateTime.UtcNow;
         [Required]
-        public DateTime DateTime { get; set; }
+        public DateTime DateTime
+        {
+            get { return dateTime; }
+            set { dateTime = DateTime.SpecifyKind(value, DateTimeKind.Utc); }
+        }
         public string Comment { get; set; }
         public Difficulty Difficulty { get; set; }
         public double TotalDistance { get; set; }

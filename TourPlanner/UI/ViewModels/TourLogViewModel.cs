@@ -10,6 +10,7 @@ using TourPlanner.UI.ViewModels.Abstract;
 using TourPlanner.DAL;
 using TourPlanner.DAL.Repository;
 using System;
+using static log4net.Appender.RollingFileAppender;
 
 namespace TourPlanner.UI.ViewModels
 {
