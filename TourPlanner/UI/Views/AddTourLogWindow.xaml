@@ -22,7 +22,7 @@
 
         <!-- Date/Time -->
         <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Label Content="Date/Time:" Width="100"/>
+            <Label Content="Date:" Width="100"/>
             <DatePicker SelectedDate="{Binding DateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="5"/>
         </StackPanel>
 

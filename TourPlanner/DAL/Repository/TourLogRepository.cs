@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,14 +20,28 @@ namespace TourPlanner.DAL.Repository
 
         public async Task AddTourLogAsync(Tour selectedTour, TourLog tourlog)
         {
-            var tour = context.Tours.Include(t => t.TourLogs).FirstOrDefault(t => t.Id == selectedTour.Id);
-            if (tour == null)
+            try
             {
-                throw new InvalidOperationException("Tour not found");
-            }
+                var tour = context.Tours.Include(t => t.TourLogs).FirstOrDefault(t => t.Id == selectedTour.Id);
+                if (tour == null)
+                {
+                    throw new InvalidOperationException("Tour not found");
+                }
 
-            tour.TourLogs.Add(tourlog);
-            context.SaveChanges();
+                tour.TourLogs.Add(tourlog);
+                await context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"An error occurred while adding the tour log: {ex.Message}");
+                Debug.WriteLine($"Stack Trace: {ex.StackTrace}");
+                if (ex.InnerException != null)
+                {
+                    Debug.WriteLine($"Inner Exception: {ex.InnerException.Message}");
+                    Debug.WriteLine($"Inner Exception Stack Trace: {ex.InnerException.StackTrace}");
+                }
+                throw;
+            }
         }
 
         public List<TourLog> GetAllTourLogs()
