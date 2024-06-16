@@ -1,14 +1,14 @@
 # SWEN-2 Tour Planner 
 Protocol:
 
-## Inhaltsverzeichnis
+## Table of Contents
 
 - [1. Project Overview](#1-project-overview)
 - [Team Members](#team-members)
 - [2. Design and Architecture](#2-design-and-architecture)
 - [Application Architecture](#application-architecture)
 - [3. UI Flow / Wireframe](#3-ui-flow--wireframe)
-- [3.1. Main Window](#31-main-window)
+- [3.1. Main Window](#3.1.-main-window)
 - [4. Technical Decisions and Steps](#4-technical-decisions-and-steps)
 - [4.1. Design Patterns](#41-design-patterns)
 - [4.2. MVVM Implementation](#42-mvvm-implementation)
@@ -73,7 +73,7 @@ Implements a repository pattern for clean data access.
 
 
 
-#### 1. Project Structure Diagram:
+#### 4.1. Project Structure Diagram:
 
 
 
@@ -103,10 +103,10 @@ Implements a repository pattern for clean data access.
 
 ![](images/image3.png)
 
-3. # UI Flow / Wireframe
+# 3. UI Flow / Wireframe
 
 
-1. ## Main Window
+## 1. Main Window
 
 
 
@@ -114,10 +114,10 @@ Implements a repository pattern for clean data access.
 
 ![](images/image4.png)
 
-4. # Technical Decisions and Steps
+# 4. Technical Decisions and Steps
 
 
-1. ## Design Patterns
+## 1. Design Patterns
 
 
 
@@ -129,7 +129,7 @@ Repository Pattern: For data access, allowing the business logic to interact wit
 
 Factory Pattern: To manage the creation of complex objects.
 
-2. ## MVVM Implementation
+## 2. MVVM Implementation
 
 
 
@@ -139,7 +139,7 @@ View: XAML files that define the UI.
 
 ViewModel: Handles the interaction between the Model and View, processing user input and updating the UI.
 
-3. ## Layer-Based Architecture
+## 3. Layer-Based Architecture
 
 
 
@@ -149,13 +149,13 @@ Business Layer (BL): Contains the core functionality and business logic.
 
 Data Access Layer (DAL): Manages data storage and retrieval using Entity Framework and PostgreSQL.
 
-4. ## Configuration File:
+## 4. Configuration File:
 
 
 
 Used for storing DB connection string and API key.
 
-5. ## External Libraries:
+## 5. External Libraries:
 
 
 
@@ -173,7 +173,7 @@ Newtonsoft.Json
 
 Npgsql
 
-5. # Unit Tests
+# 5. Unit Tests
 
 
 
@@ -201,13 +201,13 @@ TourLogServiceTests:
 * Ensures that tours are correctly exported to a JSON file
 5. ImportToursFromJson\_ImportToursFromFile
 * Ensures that tours are correctly imported from a JSON file
-6. # Unique Feature
+# 6. Unique Feature
 
 
 
 The unique feature we implemented is a Top Tours tab that acts as a recommendation. Based on the popularity of the tours, the top three tours get recommended to the user. 
 
-7. # Time Tracking
+# 7. Time Tracking
 
 
 
@@ -227,7 +227,7 @@ Week 15-16: Final presentation preparation and protocol completion.
 
 ~100h
 
-8. # Lessons Learned
+# 8. Lessons Learned
 
 
 
@@ -257,11 +257,8 @@ API Integration and Map generation: Initial difficulties with the Map creation w
 
 Data Persistence: Ensuring efficient data storage and retrieval with PostgreSQL required testing/optimizing queries of the entity framework and understanding the ORM tool's capabilities.
 
-9. # Git Repository Link
+# 9. Git Repository Link
 
 
 
 [https://github.com/Yannick-Nw/SWEN2-Tour-Planner.git](#https://www.google.com/url?q=https://github.com/Yannick-Nw/SWEN2-Tour-Planner.git&sa=D&source=editors&ust=1718560035247039&usg=AOvVaw3MSSx46unA5X2EfxTMDm3p) 
-
- / 
-
