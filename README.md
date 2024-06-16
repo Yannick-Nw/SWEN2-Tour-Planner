@@ -69,11 +69,11 @@ Handles data persistence and retrieval from PostgreSQL.
 
 Implements a repository pattern for clean data access.
 
-### 4. Diagrams
+### 2.4. Diagrams
 
 
 
-#### 4.1. Project Structure Diagram:
+#### 2.4.1. Project Structure Diagram:
 
 
 
@@ -106,7 +106,7 @@ Implements a repository pattern for clean data access.
 # 3. UI Flow / Wireframe
 
 
-## 1. Main Window
+## 3.1. Main Window
 
 
 
@@ -117,7 +117,7 @@ Implements a repository pattern for clean data access.
 # 4. Technical Decisions and Steps
 
 
-## 1. Design Patterns
+## 4.1. Design Patterns
 
 
 
@@ -129,7 +129,7 @@ Repository Pattern: For data access, allowing the business logic to interact wit
 
 Factory Pattern: To manage the creation of complex objects.
 
-## 2. MVVM Implementation
+## 4.2. MVVM Implementation
 
 
 
@@ -139,7 +139,7 @@ View: XAML files that define the UI.
 
 ViewModel: Handles the interaction between the Model and View, processing user input and updating the UI.
 
-## 3. Layer-Based Architecture
+## 4.3. Layer-Based Architecture
 
 
 
@@ -149,13 +149,13 @@ Business Layer (BL): Contains the core functionality and business logic.
 
 Data Access Layer (DAL): Manages data storage and retrieval using Entity Framework and PostgreSQL.
 
-## 4. Configuration File:
+## 4.4. Configuration File:
 
 
 
 Used for storing DB connection string and API key.
 
-## 5. External Libraries:
+## 4.5. External Libraries:
 
 
 
@@ -201,6 +201,7 @@ TourLogServiceTests:
 * Ensures that tours are correctly exported to a JSON file
 5. ImportToursFromJson\_ImportToursFromFile
 * Ensures that tours are correctly imported from a JSON file
+  
 # 6. Unique Feature
 
 
