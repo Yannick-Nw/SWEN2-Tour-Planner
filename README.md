@@ -1,41 +1,28 @@
-SWEN-2 Tour Planner 
+# SWEN-2 Tour Planner 
 Protocol:
 
-[1. Project Overview](#h.r2qleadmr6lm)[1](#h.r2qleadmr6lm)
+## Inhaltsverzeichnis
 
-[Team Members:](#h.qxmosic5f29z)[1](#h.qxmosic5f29z)
+- [1. Project Overview](#1-project-overview)
+- [Team Members](#team-members)
+- [2. Design and Architecture](#2-design-and-architecture)
+- [Application Architecture](#application-architecture)
+- [3. UI Flow / Wireframe](#3-ui-flow--wireframe)
+- [3.1. Main Window](#31-main-window)
+- [4. Technical Decisions and Steps](#4-technical-decisions-and-steps)
+- [4.1. Design Patterns](#41-design-patterns)
+- [4.2. MVVM Implementation](#42-mvvm-implementation)
+- [4.3. Layer-Based Architecture](#43-layer-based-architecture)
+- [4.4. Configuration File](#44-configuration-file)
+- [4.5. External Libraries](#45-external-libraries)
+- [5. Unit Tests](#5-unit-tests)
+- [6. Unique Feature](#6-unique-feature)
+- [7. Time Tracking](#7-time-tracking)
+- [8. Lessons Learned](#8-lessons-learned)
+- [9. Git Repository Link](#9-git-repository-link)
 
-[2. Design and Architecture](#h.9swlr23lev8o)[1](#h.9swlr23lev8o)
 
-[Application Architecture](#h.ofp2aseqxkf1)[1](#h.ofp2aseqxkf1)
-
-[3. UI Flow / Wireframe](#h.c9kqrn66u456)[5](#h.c9kqrn66u456)
-
-[3.1. Main Window](#h.2ja6we48ux0u)[5](#h.2ja6we48ux0u)
-
-[4. Technical Decisions and Steps](#h.yrtovkt8dhrk)[6](#h.yrtovkt8dhrk)
-
-[4.1. Design Patterns](#h.qgpkv3vsmg80)[6](#h.qgpkv3vsmg80)
-
-[4.2. MVVM Implementation](#h.n5d1z6o5b3jj)[6](#h.n5d1z6o5b3jj)
-
-[4.3. Layer-Based Architecture](#h.momsalshn1s5)[6](#h.momsalshn1s5)
-
-[4.4. Configuration File:](#h.4ey4ex3rqmen)[7](#h.4ey4ex3rqmen)
-
-[4.5. External Libraries:](#h.xej0m5c1v74k)[7](#h.xej0m5c1v74k)
-
-[5. Unit Tests](#h.ga99vhhuhnxs)[7](#h.ga99vhhuhnxs)
-
-[6. Unique Feature](#h.dy7gnx3z7dyq)[8](#h.dy7gnx3z7dyq)
-
-[7. Time Tracking](#h.ei2zzic2mwx2)[8](#h.ei2zzic2mwx2)
-
-[8. Lessons Learned](#h.n5cz7q31rqlb)[8](#h.n5cz7q31rqlb)
-
-[9. Git Repository Link](#h.atuqdmtljpz9)[9](#h.atuqdmtljpz9)
-
-1. # Project Overview
+# 1. Project Overview
 
 
 
@@ -46,7 +33,7 @@ The Tour Planner application is designed to allow users to create, manage, and l
 * Yannick NWANKWO
 * Donya MOHARAM
 
-2. # Design and Architecture
+# 2. Design and Architecture
 
 
 
@@ -82,17 +69,17 @@ Handles data persistence and retrieval from PostgreSQL.
 
 Implements a repository pattern for clean data access.
 
-4. ### Diagrams
+### 4. Diagrams
 
 
 
-1. #### Project Structure Diagram:
+#### 1. Project Structure Diagram:
 
 
 
 ![](images/image5.png)
 
-2. #### Class Diagram:
+#### 2. Class Diagram:
 
 
 
@@ -100,19 +87,19 @@ Implements a repository pattern for clean data access.
 
 ![](images/image2.png)
 
-3. #### Sequence diagram:
+#### 3. Sequence diagram:
 
 
 
-[Plant UML Sequence Diagram](https://www.google.com/url?q=http://www.plantuml.com/plantuml/png/dPDFRnCn4CNl_XH3Jo2rV80UK54AKWyKrDBUf_PBiUe_qNXsetvxxAob9UcoGkHWoPhtUsycdhqgog933EQT_a84HPPYs6eMUYWGOzf95v_ePnxaH-2K80ytT4cRuEqBdMq4hA1Rx0-ACtEiw-11vNDwzDX_omwX6dpV8P7M8jbUfMsME0MkS5-IGYRGGTc7GkyJHvpNQx7YTmqu9wZz-C4icwouFtBmZXL70OQ3zahJq_rWBKenL7-h2VUGqLlGPKMUebSQkxth_gpSNMPnP--moyLhbjU6yuW5PDOqwhgMdhYqk9jK84e9-uaIs2okSRFgOYde3Zf88d_WswmsfwsNoEsocFjcrCr4pErIuH7kxPmhp_3PlgIy3t3FEDwHjVzyOKjli_hjwycQbPFdcu5cqVQlajU-x0B_1QLO3tw6GIZuSpE-iW-3uF-w76SVY6JvnmvFiTuSYa5ovgeUxVl-3G00&sa=D&source=editors&ust=1718560035238205&usg=AOvVaw24kZH6AelwVgvZaOI5PSFg)
+[Plant UML Sequence Diagram](#https://www.google.com/url?q=http://www.plantuml.com/plantuml/png/dPDFRnCn4CNl_XH3Jo2rV80UK54AKWyKrDBUf_PBiUe_qNXsetvxxAob9UcoGkHWoPhtUsycdhqgog933EQT_a84HPPYs6eMUYWGOzf95v_ePnxaH-2K80ytT4cRuEqBdMq4hA1Rx0-ACtEiw-11vNDwzDX_omwX6dpV8P7M8jbUfMsME0MkS5-IGYRGGTc7GkyJHvpNQx7YTmqu9wZz-C4icwouFtBmZXL70OQ3zahJq_rWBKenL7-h2VUGqLlGPKMUebSQkxth_gpSNMPnP--moyLhbjU6yuW5PDOqwhgMdhYqk9jK84e9-uaIs2okSRFgOYde3Zf88d_WswmsfwsNoEsocFjcrCr4pErIuH7kxPmhp_3PlgIy3t3FEDwHjVzyOKjli_hjwycQbPFdcu5cqVQlajU-x0B_1QLO3tw6GIZuSpE-iW-3uF-w76SVY6JvnmvFiTuSYa5ovgeUxVl-3G00&sa=D&source=editors&ust=1718560035238205&usg=AOvVaw24kZH6AelwVgvZaOI5PSFg)
 
 ![](images/image6.png)
 
-4. #### Use-Case Diagram:
+#### 4. Use-Case Diagram:
 
 
 
-[Tour-Planner.](https://www.google.com/url?q=https://drive.google.com/file/d/1ds2mOEaDcHc6_jmKTlZcnbtiew4udV_-/view?usp%3Dsharing&sa=D&source=editors&ust=1718560035238936&usg=AOvVaw2j7NNa2JIV6utBaLux_T-N)[drawio](https://www.google.com/url?q=https://drive.google.com/file/d/1ds2mOEaDcHc6_jmKTlZcnbtiew4udV_-/view?usp%3Dsharing&sa=D&source=editors&ust=1718560035239247&usg=AOvVaw1HgMvT8NPoVefu-JMnsQ4D)
+[Tour-Planner.](#https://www.google.com/url?q=https://drive.google.com/file/d/1ds2mOEaDcHc6_jmKTlZcnbtiew4udV_-/view?usp%3Dsharing&sa=D&source=editors&ust=1718560035238936&usg=AOvVaw2j7NNa2JIV6utBaLux_T-N)[drawio](#https://www.google.com/url?q=https://drive.google.com/file/d/1ds2mOEaDcHc6_jmKTlZcnbtiew4udV_-/view?usp%3Dsharing&sa=D&source=editors&ust=1718560035239247&usg=AOvVaw1HgMvT8NPoVefu-JMnsQ4D)
 
 ![](images/image3.png)
 
@@ -123,7 +110,7 @@ Implements a repository pattern for clean data access.
 
 
 
-[Tour-Planner\_Wireframe\_Main-Window.](https://www.google.com/url?q=https://drive.google.com/file/d/11MJLzYFcYncJcqSvCHw--I8-DmrAt6hK/view?usp%3Dsharing&sa=D&source=editors&ust=1718560035240021&usg=AOvVaw1YlDGRDQYLKDZl99H_TDss)[drawio](https://www.google.com/url?q=https://drive.google.com/file/d/11MJLzYFcYncJcqSvCHw--I8-DmrAt6hK/view?usp%3Dsharing&sa=D&source=editors&ust=1718560035240291&usg=AOvVaw30AdDlFdmLRwU3b-4QMnAu)
+[Tour-Planner\_Wireframe\_Main-Window.](#https://www.google.com/url?q=https://drive.google.com/file/d/11MJLzYFcYncJcqSvCHw--I8-DmrAt6hK/view?usp%3Dsharing&sa=D&source=editors&ust=1718560035240021&usg=AOvVaw1YlDGRDQYLKDZl99H_TDss)[drawio](#https://www.google.com/url?q=https://drive.google.com/file/d/11MJLzYFcYncJcqSvCHw--I8-DmrAt6hK/view?usp%3Dsharing&sa=D&source=editors&ust=1718560035240291&usg=AOvVaw30AdDlFdmLRwU3b-4QMnAu)
 
 ![](images/image4.png)
 
@@ -274,4 +261,7 @@ Data Persistence: Ensuring efficient data storage and retrieval with PostgreSQL 
 
 
 
-[https://github.com/Yannick-Nw/SWEN2-Tour-Planner.git](https://www.google.com/url?q=https://github.com/Yannick-Nw/SWEN2-Tour-Planner.git&sa=D&source=editors&ust=1718560035247039&usg=AOvVaw3MSSx46unA5X2EfxTMDm3p) 
+[https://github.com/Yannick-Nw/SWEN2-Tour-Planner.git](#https://www.google.com/url?q=https://github.com/Yannick-Nw/SWEN2-Tour-Planner.git&sa=D&source=editors&ust=1718560035247039&usg=AOvVaw3MSSx46unA5X2EfxTMDm3p) 
+
+ / 
+
